@@ -54,7 +54,7 @@ const Home: React.FC = () => {
             <div className="w-full md:w-1/2">
               <div className="relative">
                 <img 
-                  src="https://picsum.photos/seed/krystina1/800/1000" 
+                  src="https://www.sharingmemoriesadmin.ca/img/1093723" 
                   className="rounded-2xl shadow-2xl relative z-10"
                   alt="Krystina in Nature"
                 />
