@@ -24,12 +24,12 @@ const Philosophy: React.FC = () => {
   }, [activeTab]);
 
   const tabs = [
-    { id: 'identity', label: 'Identity', subtitle: 'Biocentric Self', icon: '🌍' },
-    { id: 'critique', label: 'Systems', subtitle: 'The Silo Trap', icon: '⛓️' },
-    { id: 'biology', label: 'Sovereignty', subtitle: 'Metabolic', icon: '💧' },
-    { id: 'mysticism', label: 'Immune', subtitle: 'The Khalsa', icon: '⚔️' },
-    { id: 'solidarity', label: 'The Vote', subtitle: 'Visual Fast', icon: '⚖️' },
-    { id: 'library', label: 'Archive', subtitle: 'Sacred Texts', icon: '📚' },
+    { id: 'identity', label: 'Connection', subtitle: 'Nature & Self', icon: '🌍' },
+    { id: 'critique', label: 'Sharing', subtitle: 'Breaking Silos', icon: '⚖️' },
+    { id: 'biology', label: 'Health', subtitle: 'Vitality', icon: '💧' },
+    { id: 'mysticism', label: 'Service', subtitle: 'Honest Action', icon: '🤝' },
+    { id: 'solidarity', label: 'Simplicity', subtitle: 'Visual Fast', icon: '🖼️' },
+    { id: 'library', label: 'Bookshelf', subtitle: 'Her Favorites', icon: '📚' },
   ];
 
   const imageAnimation = {
@@ -83,10 +83,10 @@ const Philosophy: React.FC = () => {
 
         <div className="relative z-10 text-center px-6 mt-12 max-w-6xl mx-auto">
           <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 1 }}>
-            <span className="text-amber-500 font-black uppercase tracking-[0.8em] text-[10px] block mb-6">The Master Repository</span>
-            <h1 className="font-serif text-5xl md:text-7xl text-white mb-4 tracking-tighter leading-none italic">The Visionary Path</h1>
+            <span className="text-amber-500 font-black uppercase tracking-[0.8em] text-[10px] block mb-6">Insights & Teachings</span>
+            <h1 className="font-serif text-5xl md:text-7xl text-white mb-4 tracking-tighter leading-none italic">A Sincere Path</h1>
             <p className="font-serif italic text-lg md:text-2xl text-emerald-100 max-w-2xl mx-auto leading-relaxed opacity-90">
-              "To return to the source is to find the Earth thinking through you."
+              "To look honestly at the world is to find your own place within it."
             </p>
           </motion.div>
         </div>
@@ -135,10 +135,10 @@ const Philosophy: React.FC = () => {
             {activeTab === 'identity' && (
               <article className="space-y-12">
                 <div className="max-w-4xl">
-                  <h2 className="font-serif text-3xl md:text-4xl text-emerald-950 mb-8 tracking-tight italic">Beyond the Skin-Boundary Hallucination</h2>
+                  <h2 className="font-serif text-3xl md:text-4xl text-emerald-950 mb-8 tracking-tight italic">Reconnecting with the Natural World</h2>
                   <div className="prose prose-emerald prose-lg text-slate-600 font-light leading-relaxed space-y-8">
                     <p>
-                      Krystina’s work began with a radical reframing of human identity: the <strong>"Skin-Boundary Hallucination."</strong> She observed that modern humans suffer from a form of planetary dysmorphia, where we view ourselves as autonomous actors independent of the biosphere.
+                      Krystina often spoke about how modern life makes us feel separate from the world around us. She called this a "hallucination"—a trick of the mind that makes us forget we are part of a much larger, living system.
                     </p>
 
                     <motion.div {...imageAnimation} className="my-16">
@@ -151,15 +151,15 @@ const Philosophy: React.FC = () => {
                     </motion.div>
 
                     <p>
-                      In the <strong>Our Earth Brain</strong> paradigm, the human brain is not a private terminal for personal data. Instead, it is a specialized organ of the Earth itself—a pre-frontal cortex that allows the planet to witness, reflect upon, and navigate its own evolution.
+                      In her view, we aren't just "visiting" nature; we are nature. Our thoughts, our health, and our choices are all part of how the world functions. When we start to see ourselves this way, we begin to live with more purpose and less fear.
                     </p>
 
                     <p>
-                      Every human mind provides value only when it acknowledges its role as a sensor for the biosphere. This shift is biological. Every breath you take is an atmospheric exchange; every drop of water in your blood has cycled through the oceans and clouds for eons.
+                      Every breath is a reminder of this connection. Every drop of water we drink has been part of the earth's cycles for eons. Reclaiming this perspective is the first step toward a more honest and grounded life.
                     </p>
 
                     <blockquote className="font-serif italic text-2xl text-emerald-900 border-l-4 border-amber-500 pl-10 py-8 bg-emerald-50 rounded-r-[2.5rem] my-12">
-                      "We are not guests on this planet; we are the planet’s way of saying 'I AM'."
+                      "We aren't separate from the world; we are the world's way of noticing itself."
                     </blockquote>
                   </div>
                 </div>
@@ -170,10 +170,10 @@ const Philosophy: React.FC = () => {
             {activeTab === 'critique' && (
               <article className="space-y-12">
                 <div className="max-w-4xl">
-                  <h2 className="font-serif text-3xl md:text-4xl text-emerald-950 mb-8 tracking-tight italic">The Stored Grain Fallacy & The Bio-Lobotomy</h2>
+                  <h2 className="font-serif text-3xl md:text-4xl text-emerald-950 mb-8 tracking-tight italic">Breaking Silos & The Value of Sharing</h2>
                   <div className="prose prose-emerald prose-lg text-slate-600 font-light leading-relaxed space-y-8">
                     <p>
-                      Krystina identified a historical turning point: the transition from <strong>"Flow" to "Storage."</strong> For the vast majority of human existence, we lived in accordance with Natural Law, moving with the cycles of light and life.
+                      Krystina looked deeply at how we organize our lives and our resources. She noticed that whenever we "store" things away—whether it's food, money, or even ideas—we start to build silos that separate us from one another.
                     </p>
 
                     <motion.div {...imageAnimation} className="my-16">
@@ -186,16 +186,12 @@ const Philosophy: React.FC = () => {
                     </motion.div>
 
                     <p>
-                      The moment grain was stored in a Silo, a hierarchy was born. Stored grain required protection, which birthed the first specialized guards. Currencies required legitimacy, which birthed monarchs. We have been shackled to a "Monoculture of the Mind," where we are forced to think in rows.
-                    </p>
-
-                    <p>
-                      To break the shackle, we must dismantle the Silo-mentality. We must realize that hoarding is a biological cancer, and that true security comes from the "Flow" of resources through a healthy, shared planetary body.
+                      When we hoard, we create hierarchies and prisons of our own making. Her vision was for a world where we return to a "flow" of resources—where sharing is the natural state, and we treat our community like a single, healthy body.
                     </p>
 
                     <div className="bg-emerald-950 text-white p-12 rounded-[3rem] shadow-2xl relative overflow-hidden my-16 border border-emerald-900">
                       <p className="font-serif italic text-2xl leading-relaxed opacity-90">
-                        "The Silo is the architecture of the first prison. Its purpose is to keep the Earth's nutrients from those who need them most."
+                        "The silo is a mindset that keeps us from seeing the abundance right in front of us. When we let go of the need to own, we find the freedom to live."
                       </p>
                     </div>
                   </div>
@@ -207,10 +203,10 @@ const Philosophy: React.FC = () => {
             {activeTab === 'biology' && (
               <article className="space-y-12">
                 <div className="max-w-4xl">
-                  <h2 className="font-serif text-3xl md:text-4xl text-emerald-950 mb-8 tracking-tight italic">Metabolic Sovereignty & The pH of Rebellion</h2>
+                  <h2 className="font-serif text-3xl md:text-4xl text-emerald-950 mb-8 tracking-tight italic">Common-Sense Health & Vitality</h2>
                   <div className="prose prose-emerald prose-lg text-slate-600 font-light leading-relaxed space-y-8">
                     <p>
-                      Krystina’s teachings on health were about political sovereignty. She argued that <strong>a dehydrated, acidic population is a compliant population.</strong> The State controls us not just through ideology, but through our metabolic chemistry.
+                      As a nurse, Krystina understood that our health is the foundation of our independence. She believed that when we take care of our bodies, we take back our power to think clearly and act sincerely.
                     </p>
 
                     <motion.div {...imageAnimation} className="my-16">
@@ -223,15 +219,15 @@ const Philosophy: React.FC = () => {
                     </motion.div>
 
                     <p>
-                      <strong>The 3L Protocol:</strong> Drinking 3 liters of structured water daily *before* any food intake is a foundational act of metabolic rebellion. This flushes out the "Psychic Sludge" of industrial life and returns the internal oceans to an alkaline state of Joy.
+                      <strong>The 3L Practice:</strong> Drinking 3 liters of water daily *before* eating is a simple way to clear the "fuzziness" of modern life. It’s not about rules; it’s about giving your body the clarity it needs to find joy in everyday moments.
                     </p>
 
                     <p>
-                      Joy is the only frequency that can naturally resist systemic manipulation. If you are hydrated and alkaline, fear cannot find a home in your tissues. We wake clear, hydrated, and ready to act as a sovereign node in the Earth Brain.
+                      When you feel well, you are harder to manipulate. A hydrated, honest body is naturally resilient. It’s a foundational step in reclaiming your focus and your health.
                     </p>
 
                     <div className="bg-emerald-50 p-12 rounded-[3rem] border border-emerald-100 my-16 shadow-sm">
-                      <p className="text-slate-700 italic text-xl leading-relaxed">"A body at 7.4 pH is a mind that cannot be owned. Hydration is the first step toward reclaiming your soul."</p>
+                      <p className="text-slate-700 italic text-xl leading-relaxed">"Health is the most honest conversation you can have with yourself. Hydration is where that conversation begins."</p>
                     </div>
                   </div>
                 </div>
@@ -242,10 +238,10 @@ const Philosophy: React.FC = () => {
             {activeTab === 'mysticism' && (
               <article className="space-y-12">
                 <div className="max-w-4xl">
-                  <h2 className="font-serif text-3xl md:text-4xl text-emerald-950 mb-8 tracking-tight italic">The Global Khalsa: The Earth's Immune Response</h2>
+                  <h2 className="font-serif text-3xl md:text-4xl text-emerald-950 mb-8 tracking-tight italic">Service & Honest Action</h2>
                   <div className="prose prose-emerald prose-lg text-slate-600 font-light leading-relaxed space-y-8">
                     <p>
-                      Krystina viewed the Sikh archetype of the <strong>Khalsa</strong> through the lens of evolutionary biology. She described the Khalsa as the Earth's "White Blood Cells"—an immune response birthed by the biosphere herself to combat the cancer of systemic greed.
+                      Krystina drew inspiration from many cultures, particularly her time in India. She admired the concept of a "Warrior for Peace"—someone who is willing to stand up and serve those who have no voice, whether they are animals, forests, or communities in need.
                     </p>
 
                     <motion.div {...imageAnimation} className="my-16">
@@ -258,15 +254,11 @@ const Philosophy: React.FC = () => {
                     </motion.div>
 
                     <p>
-                      The core of this mission is <strong>Ek Onkar</strong>: the realization that the universe is a singular, vibrating field of Unity. A true planetary warrior does not fight for a nation-state; they fight for the "Silent Ones"—the animals, the forests, and the water tables that have no voice.
-                    </p>
-
-                    <p>
-                      The Khalsa’s <strong>"Sword of Mercy"</strong> is the decisive action required to prune away the parasitic systems that are suffocating the planet. To be a warrior-saint is to be the Earth's hands and eyes in the physical realm.
+                      Service isn't about being a hero; it's about being useful. A true activist doesn't fight for a cause; they show up for the "Silent Ones." To serve is to be the hands and eyes of a community that cares for all life.
                     </p>
 
                     <blockquote className="font-serif italic text-2xl text-amber-600 border-l-4 border-emerald-900 pl-10 py-8 my-16 bg-slate-50 rounded-r-3xl">
-                      "We fight not for land or gold, but for the breath of the world. We are the shield for the voiceless billions."
+                      "We stand up because we can. We speak because they can't. Service is how we prove we are listening to the world."
                     </blockquote>
                   </div>
                 </div>
@@ -277,10 +269,10 @@ const Philosophy: React.FC = () => {
             {activeTab === 'solidarity' && (
               <article className="space-y-12">
                 <div className="max-w-4xl">
-                  <h2 className="font-serif text-3xl md:text-4xl text-emerald-950 mb-8 tracking-tight italic">The Visual Fast & The Global Vote</h2>
+                  <h2 className="font-serif text-3xl md:text-4xl text-emerald-950 mb-8 tracking-tight italic">Simplicity in a Loud World</h2>
                   <div className="prose prose-emerald prose-lg text-slate-600 font-light leading-relaxed space-y-8">
                     <p>
-                      Modern corporate media uses <strong>"Visual Sugar"</strong>—hyper-saturated colors designed to trigger dopamine and bypass logic. This keeps the Earth Brain in a state of superficial agitation, preventing us from seeing structural truth.
+                      We live in a world that is constantly screaming for our attention with bright colors and loud distractions. Krystina believed that this "noise" keeps us from seeing the simple, honest truths right in front of us.
                     </p>
 
                     <motion.div {...imageAnimation} className="my-16">
@@ -293,11 +285,7 @@ const Philosophy: React.FC = () => {
                     </motion.div>
 
                     <p>
-                      The <strong>Black & White movement</strong> is a "Visual Renunciation." By choosing monochrome, we return our attention to structure and geometry. Every image shared in Black and White is a <strong>Global Vote</strong>—a signal of solidarity that transcends language.
-                    </p>
-
-                    <p>
-                      When we unite under the banner of monochrome, we signal our return to the root of all things, refusing to be distracted by the "sugar" of the system. It is a spiritual filter for a new era of clarity.
+                      By choosing simplicity—whether it's through a "visual fast" or just turning down the volume of modern media—we return our attention to what matters. It's about seeing the structure of life clearly, without the "sugar" that usually clouds our vision.
                     </p>
 
                     <div className="flex flex-col items-center py-16 bg-emerald-950 rounded-[4rem] border border-emerald-900 my-16 shadow-2xl">
@@ -316,8 +304,8 @@ const Philosophy: React.FC = () => {
             {activeTab === 'library' && (
               <article className="space-y-12">
                 <div className="text-center mb-16">
-                  <h2 className="font-serif text-4xl text-emerald-950 mb-6 tracking-tight italic">The Earth Archive</h2>
-                  <p className="text-xl text-slate-500 font-serif italic max-w-2xl mx-auto leading-relaxed">"These maps were drawn by those who remembered the way home when the rest of the world was lost in the Silos."</p>
+                  <h2 className="font-serif text-4xl text-emerald-950 mb-6 tracking-tight italic">Books She Loved</h2>
+                  <p className="text-xl text-slate-500 font-serif italic max-w-2xl mx-auto leading-relaxed">"She always said that the right book at the right time is like a conversation with a friend you haven't met yet."</p>
                 </div>
 
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
@@ -341,11 +329,11 @@ const Philosophy: React.FC = () => {
                 <motion.div {...imageAnimation} className="mt-24">
                   <ImageWithLoader
                     src={tabImages.library}
-                    alt="The Living Archive"
+                    alt="Her Library"
                     className="rounded-[3rem] shadow-2xl h-[32rem] w-full brightness-75"
                   />
                   <div className="bg-emerald-900 text-white p-12 rounded-b-[3rem] -mt-6 relative z-10 border-x border-b border-emerald-800 shadow-2xl">
-                    <p className="font-serif italic text-2xl leading-relaxed text-center">"Wisdom is not found in the storage of data, but in the flow of understanding through the living nervous system of the world."</p>
+                    <p className="font-serif italic text-2xl leading-relaxed text-center">"Truth isn't found in a search engine; it's found when you slow down enough to listen to the people who came before us."</p>
                   </div>
                 </motion.div>
               </article>
@@ -360,10 +348,10 @@ const Philosophy: React.FC = () => {
           <motion.div initial={{ opacity: 0 }} whileInView={{ opacity: 1 }} transition={{ duration: 1.5 }}>
             <span className="text-amber-500 text-8xl font-serif mb-[-2rem] block opacity-20">“</span>
             <blockquote className="font-serif text-3xl md:text-5xl text-emerald-950 italic mb-12 leading-snug tracking-tight">
-              "The Earth can no longer handle the separation. It is time to join our minds and hearts for the good of the whole."
+              "We've spent too much time thinking we're separate. It's time to realize we're all in this together, for the good of everyone."
             </blockquote>
-            <p className="font-black uppercase tracking-[0.6em] text-[12px] text-amber-600 mb-2">— Krystina Poludnikiewicz</p>
-            <p className="text-[10px] font-bold uppercase tracking-[0.4em] text-slate-300">Movement Founder & Biocentric Visionary</p>
+            <p className="font-black uppercase tracking-[0.6em] text-[12px] text-amber-600 mb-2">— Krystina P.</p>
+            <p className="text-[10px] font-bold uppercase tracking-[0.4em] text-slate-300">Activist & Friend</p>
           </motion.div>
         </div>
       </section>

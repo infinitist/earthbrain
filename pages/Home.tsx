@@ -40,8 +40,8 @@ const Home: React.FC = () => {
         <div className="relative z-10 text-center px-6 max-w-4xl mx-auto w-full">
           <div>
             <h1 className="sr-only">Our Earth Brain</h1>
-            <p className="font-serif italic text-2xl md:text-4xl text-amber-50 max-w-3xl mx-auto mb-16 opacity-90 leading-relaxed drop-shadow-lg text-glow">
-              "Honoring the visionary life and movement founded by Krystina Poludnikiewicz."
+            <p className="font-serif italic text-2xl md:text-3xl text-amber-50 max-w-3xl mx-auto mb-16 opacity-90 leading-relaxed drop-shadow-lg text-glow">
+              "Celebrating the curiosity, community insights, and healthy living shared by Krystina Poludnikiewicz."
             </p>
 
             <motion.div
@@ -134,21 +134,21 @@ const Home: React.FC = () => {
               </div>
             </div>
             <div className="w-full md:w-1/2">
-              <span className="text-amber-600 font-bold uppercase tracking-[0.2em] text-sm mb-4 block">The Vision</span>
+              <span className="text-amber-600 font-bold uppercase tracking-[0.2em] text-sm mb-4 block">Her Perspective</span>
               <h2 className="font-serif text-5xl md:text-6xl text-emerald-950 mb-8 leading-tight">
-                Sentient <span className="italic text-amber-600">Earth</span>
+                Learning from <span className="italic text-amber-600">Nature</span>
               </h2>
               <div className="space-y-6 text-slate-600 leading-relaxed text-lg font-light">
                 <p>
-                  Krystina Poludnikiewicz founded Our Earth Brain with a singular, profound realization: that we are not observers of nature, but the organ through which the Earth reflects upon itself.
+                  Krystina believed that a healthy life starts with a simple choice: to look at the world around us with fresh eyes and an open heart. As a nurse and an activist, she saw how easily we lose touch with the natural rhythms that keep us well.
                 </p>
                 <p>
-                  Her work transcended traditional environmentalism, moving into the realm of biocentric consciousness. She believed that by listening to the "whispers" of the land, we could heal our fractured relationship with the biosphere.
+                  Her goal was simple: to help people find their way back to a more honest, grounded way of living. She encouraged us to listen to the "quiet parts" of the world—the soil, the water, and our own bodies—to find common-sense ways to thrive together.
                 </p>
               </div>
               <div className="mt-12">
                 <Link to="/philosophy" className="inline-flex items-center text-emerald-900 font-bold uppercase tracking-widest text-sm hover:text-amber-600 transition-colors group">
-                  Explore the Philosophy
+                  EXPLORE HER TEACHINGS
                   <span className="ml-2 w-8 h-8 rounded-full bg-emerald-100 flex items-center justify-center group-hover:translate-x-2 transition-transform">
                     <svg className="w-4 h-4 text-emerald-800" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M14 5l7 7m0 0l-7 7m7-7H3" /></svg>
                   </span>
@@ -176,7 +176,7 @@ const Home: React.FC = () => {
             <blockquote className="font-serif text-3xl md:text-5xl italic mb-10 max-w-4xl mx-auto leading-tight text-emerald-50">
               The Earth does not belong to us; we belong to the Earth. Our thoughts are her neurons. Our actions are her heartbeat.
             </blockquote>
-            <cite className="font-bold uppercase tracking-[0.3em] text-sm text-amber-500 block">— Krystina Poludnikiewicz</cite>
+            <cite className="font-bold uppercase tracking-[0.3em] text-sm text-amber-500 block">— Krystina P.</cite>
           </motion.div>
         </div>
       </section>

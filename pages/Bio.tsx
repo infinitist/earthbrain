@@ -45,10 +45,10 @@ const Bio: React.FC = () => {
     };
 
     const timelineEvents = [
-        { year: "The Beginning", title: "A Connection to Nature", desc: "From her earliest days, Krystina felt a profound kinship with the living world, spending hours listening to the forests." },
-        { year: "The Awakening", title: "Biocentric Vision", desc: "She realized that human consciousness is not separate from Earth, but a function of it." },
-        { year: "The Movement", title: "Founding Earth Brain", desc: "Krystina gathered a community of thinkers and feelers to explore this deep connection." },
-        { year: "Legacy", title: "Eternal Impact", desc: "Her teachings continue to guide us as we protect and honor the biosphere." }
+        { year: "Early Years", title: "A Deep Curiosity", desc: "Even as a child, Krystina was fascinated by the natural world and had a unique way of looking 'behind the curtain' of everyday life." },
+        { year: "Nursing & Service", title: "Caring for People", desc: "Her career in nursing wasn't just a job; it was a way to practice her belief in honest service and direct health activism." },
+        { year: "A New Direction", title: "Sharing the Insights", desc: "She began gathering thoughts on how we can live more simply and healthily by reconnecting with the land and each other." },
+        { year: "Her Impact", title: "A Lasting Connection", desc: "Krystina's common-sense teachings on health and community continue to inspire those who knew her and those who discover her work today." }
     ];
 
     return (
@@ -71,7 +71,7 @@ const Bio: React.FC = () => {
                             "To plant a garden is to believe in <span className="text-amber-600">tomorrow</span>."
                         </p>
                         <p className="font-light text-xl leading-relaxed text-slate-700">
-                            Krystina was not just a person, but a force of nature. Born with a deep sensitivity to the living world, she spent her life translating the silent language of the Earth into words we could understand. She taught us that every leaf, every stone, and every river has a voice.
+                            Krystina was a nurse, an activist, and above all, a person with a deep and honest curiosity about how the world really works. She didn't just teach health; she lived it, showing us how to peel back the layers of modern life to find something more sincere and connected underneath.
                         </p>
                     </div>
                 </div>
@@ -109,14 +109,14 @@ const Bio: React.FC = () => {
                             <div className="inline-block p-4 rounded-full bg-amber-50 mb-6 shadow-inner">
                                 <svg className="w-8 h-8 text-amber-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" /></svg>
                             </div>
-                            <h2 className="font-serif text-4xl text-emerald-950 mb-4">Contribute to the Archive</h2>
-                            <p className="text-slate-500 max-w-lg mx-auto">Help us build a rich profile of Krystina's favorites and moments. Your memories keep her spirit alive.</p>
+                            <h2 className="font-serif text-4xl text-emerald-950 mb-4">Share a Growing Library</h2>
+                            <p className="text-slate-500 max-w-lg mx-auto">Help us build a collection of the moments, stories, and ideas Krystina shared. Every entry helps keep the conversation going.</p>
                         </div>
 
                         {done ? (
                             <div className="bg-emerald-50/50 p-10 rounded-3xl text-center border border-emerald-100">
                                 <p className="font-serif text-3xl text-emerald-900 mb-4 italic">Thank you</p>
-                                <p className="text-slate-600 mb-8">Your memory has been added to Krystina's permanent archive.</p>
+                                <p className="text-slate-600 mb-8">Your contribution has been added to the community library.</p>
                                 <button onClick={() => setDone(false)} className="text-xs font-bold uppercase tracking-widest text-amber-600 hover:text-amber-500 border-b-2 border-amber-200 pb-1 hover:border-amber-500 transition-all">
                                     Submit Another
                                 </button>
