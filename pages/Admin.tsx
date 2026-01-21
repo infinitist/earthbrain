@@ -29,14 +29,13 @@ const Admin: React.FC = () => {
   useEffect(() => {
     if (!user) return;
 
-    const saved = localStorage.getItem('earth_brain_admin_data');
-    if (saved) {
-      setRecords(JSON.parse(saved));
-      setLastSync(new Date().toLocaleTimeString());
-    }
-
     const fetchData = async () => {
       try {
+        const qRsvp = query(collection(db, 'earthbrain_rsvps'), orderBy('timestamp', 'desc'));
+        const snapRsvp = await getDocs(qRsvp);
+        setRecords(snapRsvp.docs.map(doc => ({ id: doc.id, ...doc.data() }))); // Use Firestore data immediately
+        setLastSync(new Date().toLocaleTimeString());
+
         const qMem = query(collection(db, 'earthbrain_memories'), orderBy('timestamp', 'desc'));
         const snapMem = await getDocs(qMem);
         setMemories(snapMem.docs.map(doc => ({ id: doc.id, ...doc.data() })));
@@ -80,11 +79,9 @@ const Admin: React.FC = () => {
     e.preventDefault();
     if (!newCharity.name) return;
     try {
-      await addDoc(collection(db, 'earthbrain_charities'), newCharity);
-      alert('Charity Added');
+      const docRef = await addDoc(collection(db, 'earthbrain_charities'), newCharity);
+      setCharities(prev => [...prev, { id: docRef.id, ...newCharity }]);
       setNewCharity({ name: '', url: '', description: '' });
-      // In a real app we'd refetch or update local state manually
-      window.location.reload();
     } catch (err) {
       console.error(err);
       alert('Error adding charity');
@@ -95,7 +92,7 @@ const Admin: React.FC = () => {
     if (!window.confirm('Delete this charity?')) return;
     try {
       await deleteDoc(doc(db, 'earthbrain_charities', id));
-      window.location.reload();
+      setCharities(prev => prev.filter(c => c.id !== id));
     } catch (err) {
       console.error(err);
       alert('Error deleting charity');
@@ -109,7 +106,7 @@ const Admin: React.FC = () => {
         approved: true,
         approvedAt: new Date().toISOString()
       });
-      window.location.reload();
+      setMemories(prev => prev.map(m => m.id === id ? { ...m, approved: true } : m));
     } catch (err) {
       console.error(err);
       alert('Error approving memory');
@@ -120,7 +117,7 @@ const Admin: React.FC = () => {
     if (!window.confirm('Permanently delete this memory?')) return;
     try {
       await deleteDoc(doc(db, 'earthbrain_memories', id));
-      window.location.reload();
+      setMemories(prev => prev.filter(m => m.id !== id));
     } catch (err) {
       console.error(err);
       alert('Error deleting memory');
@@ -134,7 +131,7 @@ const Admin: React.FC = () => {
         approved: true,
         approvedAt: new Date().toISOString()
       });
-      window.location.reload();
+      setPosts(prev => prev.map(p => p.id === id ? { ...p, approved: true } : p));
     } catch (err) {
       console.error(err);
       alert('Error approving post');
@@ -145,10 +142,21 @@ const Admin: React.FC = () => {
     if (!window.confirm('Permanently delete this post?')) return;
     try {
       await deleteDoc(doc(db, 'earthbrain_posts', id));
-      window.location.reload();
+      setPosts(prev => prev.filter(p => p.id !== id));
     } catch (err) {
       console.error(err);
       alert('Error deleting post');
+    }
+  };
+
+  const handleApproveRSVP = async (id: string) => {
+    try {
+      const ref = doc(db, 'earthbrain_rsvps', id);
+      await updateDoc(ref, { approved: true });
+      setRecords(prev => prev.map(r => r.id === id ? { ...r as any, approved: true } : r));
+    } catch (err) {
+      console.error(err);
+      alert('Error approving RSVP for Guestbook');
     }
   };
 
@@ -272,6 +280,7 @@ const Admin: React.FC = () => {
                   <th className="p-6 text-[10px] font-black uppercase tracking-widest text-slate-400">Attendance</th>
                   <th className="p-6 text-[10px] font-black uppercase tracking-widest text-slate-400">Party</th>
                   <th className="p-6 text-[10px] font-black uppercase tracking-widest text-slate-400">Contact/Email</th>
+                  <th className="p-6 text-[10px] font-black uppercase tracking-widest text-slate-400 print:hidden">Guestbook</th>
                   <th className="p-6 text-[10px] font-black uppercase tracking-widest text-slate-400 print:hidden">Notes</th>
                 </tr>
               </thead>
@@ -290,6 +299,13 @@ const Admin: React.FC = () => {
                     </td>
                     <td className="p-6 text-emerald-950 font-medium">+{record.guests}</td>
                     <td className="p-6 text-slate-500 text-xs">{record.email}</td>
+                    <td className="p-6 print:hidden">
+                      {!(record as any).approved ? (
+                        <button onClick={() => handleApproveRSVP(record.id)} className="text-[9px] bg-emerald-100 text-emerald-800 px-3 py-1 rounded-full hover:bg-emerald-200 uppercase font-black tracking-wider transition-colors">Approve</button>
+                      ) : (
+                        <span className="text-[9px] text-emerald-600 font-bold uppercase tracking-wider">✓ Public</span>
+                      )}
+                    </td>
                     <td className="p-6 text-slate-500 text-sm italic max-w-xs truncate print:hidden" title={record.message}>
                       {record.message || '—'}
                     </td>
@@ -453,12 +469,7 @@ const Admin: React.FC = () => {
                     <p className="font-bold text-sm">{char.name}</p>
                     <p className="text-[10px] text-emerald-400">{char.url}</p>
                   </div>
-                  <button onClick={async () => {
-                    if (window.confirm('Delete?')) {
-                      await deleteDoc(doc(db, 'earthbrain_charities', char.id));
-                      window.location.reload();
-                    }
-                  }} className="text-xs text-red-400 hover:text-red-300">Delete</button>
+                  <button onClick={() => handleDeleteCharity(char.id)} className="text-xs text-red-400 hover:text-red-300">Delete</button>
                 </div>
               ))}
             </div>
@@ -478,7 +489,7 @@ const Admin: React.FC = () => {
                     <button onClick={async () => {
                       if (window.confirm('Delete suggestion?')) {
                         await deleteDoc(doc(db, 'earthbrain_charity_suggestions', sugg.id));
-                        window.location.reload();
+                        setSuggestions(prev => prev.filter(s => s.id !== sugg.id));
                       }
                     }} className="text-xs text-red-400 hover:text-red-500 font-bold uppercase tracking-widest">Delete</button>
                   </div>

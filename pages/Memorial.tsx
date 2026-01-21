@@ -3,7 +3,9 @@ import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import MemorialBanner from '../components/MemorialBanner';
 import { RSVPData, GuestbookEntry, RSVPRecord } from '../types';
-import { GUESTBOOK_MOCK, RSVP_BACKEND_URL } from '../constants';
+import { GUESTBOOK_MOCK } from '../constants';
+import { db } from '../src/firebase';
+import { collection, addDoc, query, orderBy, getDocs } from 'firebase/firestore';
 
 const Memorial: React.FC = () => {
   const [formData, setFormData] = useState<RSVPData>({
@@ -18,12 +20,29 @@ const Memorial: React.FC = () => {
   const [entries, setEntries] = useState<GuestbookEntry[]>([]);
 
   useEffect(() => {
-    const saved = localStorage.getItem('earth_brain_guestbook');
-    if (saved) {
-      setEntries([...JSON.parse(saved), ...GUESTBOOK_MOCK]);
-    } else {
-      setEntries(GUESTBOOK_MOCK);
-    }
+    const fetchGuestbook = async () => {
+      try {
+        const q = query(collection(db, 'earthbrain_rsvps'), orderBy('timestamp', 'desc'));
+        const sn = await getDocs(q);
+        const data = sn.docs.map(doc => ({ id: doc.id, ...doc.data() } as any));
+
+        // Transform to GuestbookEntry and filter approved
+        const publicEntries = data
+          .filter(d => d.approved === true)
+          .map(d => ({
+            id: d.id,
+            name: d.name,
+            date: new Date(d.timestamp).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' }),
+            message: d.message || "Joining in celebration."
+          }));
+
+        setEntries(publicEntries.length > 0 ? publicEntries : GUESTBOOK_MOCK);
+      } catch (err) {
+        console.error("Error loading guestbook", err);
+        setEntries(GUESTBOOK_MOCK);
+      }
+    };
+    fetchGuestbook();
   }, []);
 
   const handleEmailFallback = () => {
@@ -43,44 +62,22 @@ const Memorial: React.FC = () => {
     e.preventDefault();
     setIsSyncing(true);
 
-    // 1. Prepare Data
-    const record: RSVPRecord = {
+    const record = {
       ...formData,
-      id: Date.now().toString(),
+      approved: false, // Explicitly pending
+      type: 'rsvp',
       timestamp: new Date().toISOString()
     };
 
-    // 2. Save Locally First (Always works)
-    const existingAdmin = JSON.parse(localStorage.getItem('earth_brain_admin_data') || '[]');
-    localStorage.setItem('earth_brain_admin_data', JSON.stringify([record, ...existingAdmin]));
-
-    const newEntry: GuestbookEntry = {
-      id: record.id,
-      name: record.name,
-      date: new Date().toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' }),
-      message: record.message || "Joining in celebration of Krystina's life."
-    };
-    const updatedEntries = [newEntry, ...entries.filter(e => !GUESTBOOK_MOCK.find(m => m.id === e.id))];
-    localStorage.setItem('earth_brain_guestbook', JSON.stringify(updatedEntries));
-    setEntries([newEntry, ...entries]);
-
-    // 3. Attempt Cloud Sync if URL is provided
-    if (RSVP_BACKEND_URL) {
-      try {
-        const response = await fetch(RSVP_BACKEND_URL, {
-          method: 'POST',
-          mode: 'no-cors', // Required for Google Scripts
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify(record)
-        });
-        console.log('Cloud Sync Success');
-      } catch (err) {
-        console.error('Cloud Sync Failed', err);
-      }
+    try {
+      await addDoc(collection(db, 'earthbrain_rsvps'), record);
+      setSubmitted(true);
+    } catch (err) {
+      console.error(err);
+      alert('Error submitting RSVP. Please try again or use the email fallback.');
+    } finally {
+      setIsSyncing(false);
     }
-
-    setIsSyncing(false);
-    setSubmitted(true);
   };
 
   const googleMapsUrl = "https://www.google.com/maps/dir//Glen+Oaks+Funeral+Home+%26+Cemetery,+3164+Ninth+Line,+Oakville,+ON+L6H+7A8";

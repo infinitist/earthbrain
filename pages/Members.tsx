@@ -20,8 +20,8 @@ const Members: React.FC = () => {
         const q = query(collection(db, 'earthbrain_posts'), orderBy('timestamp', 'desc'));
         const unsubscribe = onSnapshot(q, (snapshot) => {
             const allPosts = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
-            // Client-side filter: Show approved posts OR my own posts
-            setPosts(allPosts.filter((p: any) => p.approved === true || p.userId === currentUser.uid));
+            // Client-side filter: Show ONLY approved posts (strict moderation)
+            setPosts(allPosts.filter((p: any) => p.approved === true));
         });
         return unsubscribe;
     }, [currentUser]);
@@ -87,6 +87,7 @@ const Members: React.FC = () => {
                 approved: false
             });
 
+            alert('Post submitted successfully! It will appear once approved by an admin.');
             setFile(null);
             setCaption('');
         } catch (err) {
