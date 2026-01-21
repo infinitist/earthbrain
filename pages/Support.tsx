@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
-import { RSVP_BACKEND_URL } from '../constants';
+import { db } from '../src/firebase';
+import { collection, addDoc, query, orderBy, getDocs } from 'firebase/firestore';
 
 interface Charity {
     id: string;
@@ -16,50 +17,35 @@ const Support: React.FC = () => {
     const [done, setDone] = useState(false);
 
     useEffect(() => {
-        // NOTE: Firebase fetch is temporarily disabled due to configuration issues.
-        // Falling back to hardcoded favorites for now.
-        /*
         const fetchCharities = async () => {
-             const q = query(collection(db, 'earthbrain_charities'), orderBy('name'));
-             const snapshot = await getDocs(q);
-             setCharities(snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() } as Charity)));
+            try {
+                const q = query(collection(db, 'earthbrain_charities'), orderBy('name'));
+                const snapshot = await getDocs(q);
+                setCharities(snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() } as Charity)));
+            } catch (err) {
+                console.error("Error loading charities", err);
+            }
         };
         fetchCharities();
-        */
     }, []);
 
     const handleSuggest = async (e: React.FormEvent) => {
         e.preventDefault();
         setSuggesting(true);
 
-        const record = {
-            ...suggestion,
-            type: 'charity_suggestion',
-            id: Date.now().toString(),
-            timestamp: new Date().toISOString()
-        };
-
         try {
-            // 1. Save Locally
-            const existing = JSON.parse(localStorage.getItem('earth_brain_charity_suggestions') || '[]');
-            localStorage.setItem('earth_brain_charity_suggestions', JSON.stringify([record, ...existing]));
-
-            // 2. Sync to Cloud
-            if (RSVP_BACKEND_URL) {
-                await fetch(RSVP_BACKEND_URL, {
-                    method: 'POST',
-                    mode: 'no-cors',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify(record)
-                });
-            }
+            await addDoc(collection(db, 'earthbrain_charity_suggestions'), {
+                name: suggestion.name,
+                url: suggestion.url,
+                reason: suggestion.reason,
+                timestamp: new Date().toISOString()
+            });
 
             setDone(true);
             setSuggestion({ name: '', url: '', reason: '' });
         } catch (err) {
             console.error(err);
-            alert("Connection issue. Your suggestion was saved locally.");
-            setDone(true);
+            alert("Error sending suggestion. Please try again.");
         } finally {
             setSuggesting(false);
         }

@@ -11,6 +11,7 @@ const Admin: React.FC = () => {
   const [memories, setMemories] = useState<any[]>([]);
   const [charities, setCharities] = useState<any[]>([]);
   const [suggestions, setSuggestions] = useState<any[]>([]);
+  const [posts, setPosts] = useState<any[]>([]);
   const [newCharity, setNewCharity] = useState({ name: '', url: '', description: '' });
   const [user, setUser] = useState<User | null>(null);
   const [email, setEmail] = useState('');
@@ -47,6 +48,10 @@ const Admin: React.FC = () => {
         const qSugg = query(collection(db, 'earthbrain_charity_suggestions'), orderBy('timestamp', 'desc'));
         const snapSugg = await getDocs(qSugg);
         setSuggestions(snapSugg.docs.map(doc => ({ id: doc.id, ...doc.data() })));
+
+        const qPosts = query(collection(db, 'earthbrain_posts'), orderBy('timestamp', 'desc'));
+        const snapPosts = await getDocs(qPosts);
+        setPosts(snapPosts.docs.map(doc => ({ id: doc.id, ...doc.data() })));
 
       } catch (err) {
         console.error("Error loading admin data", err);
@@ -119,6 +124,31 @@ const Admin: React.FC = () => {
     } catch (err) {
       console.error(err);
       alert('Error deleting memory');
+    }
+  };
+
+  const handleApprovePost = async (id: string) => {
+    try {
+      const postRef = doc(db, 'earthbrain_posts', id);
+      await updateDoc(postRef, {
+        approved: true,
+        approvedAt: new Date().toISOString()
+      });
+      window.location.reload();
+    } catch (err) {
+      console.error(err);
+      alert('Error approving post');
+    }
+  };
+
+  const handleRejectPost = async (id: string) => {
+    if (!window.confirm('Permanently delete this post?')) return;
+    try {
+      await deleteDoc(doc(db, 'earthbrain_posts', id));
+      window.location.reload();
+    } catch (err) {
+      console.error(err);
+      alert('Error deleting post');
     }
   };
 
@@ -328,6 +358,65 @@ const Admin: React.FC = () => {
           </div>
         </div>
 
+        {/* Community Wall Management */}
+        <div className="mt-12 p-8 bg-emerald-900 rounded-[2.5rem] text-white print:hidden">
+          <div className="flex justify-between items-center mb-6">
+            <h4 className="font-serif text-3xl text-amber-500">Community Wall</h4>
+            <span className="text-xs bg-emerald-800 px-3 py-1 rounded-full">{posts.length} Posts</span>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6 max-h-[600px] overflow-y-auto">
+            {posts.map((post: any) => (
+              <div key={post.id} className="bg-emerald-950/50 p-6 rounded-2xl border border-emerald-800 relative">
+                <div className="flex justify-between items-start mb-3">
+                  <span className={`px-2 py-1 rounded-full text-[9px] font-bold uppercase ${post.approved ? 'bg-green-500 text-white' : 'bg-amber-400 text-emerald-950'}`}>
+                    {post.approved ? '✓ Published' : '⏳ Pending'}
+                  </span>
+                </div>
+
+                {post.imageUrl && (
+                  <img src={post.imageUrl} className="w-full h-48 object-cover rounded-xl mb-4" alt="Post" />
+                )}
+
+                <p className="font-serif italic text-lg text-emerald-50 mb-2">"{post.caption}"</p>
+                <div className="flex justify-between items-center text-xs text-emerald-400 font-bold uppercase tracking-widest mb-3">
+                  <span>— {post.userName}</span>
+                  <span>{new Date(post.timestamp).toLocaleDateString()}</span>
+                </div>
+
+                <div className="flex gap-2 mt-4 pt-4 border-t border-emerald-800">
+                  {!post.approved ? (
+                    <>
+                      <button
+                        onClick={() => handleApprovePost(post.id)}
+                        className="flex-1 bg-green-600 hover:bg-green-500 text-white py-2 px-4 rounded-lg text-xs font-bold uppercase"
+                      >
+                        ✓ Approve
+                      </button>
+                      <button
+                        onClick={() => handleRejectPost(post.id)}
+                        className="flex-1 bg-red-600/80 hover:bg-red-500 text-white py-2 px-4 rounded-lg text-xs font-bold uppercase"
+                      >
+                        ✕ Reject
+                      </button>
+                    </>
+                  ) : (
+                    <button
+                      onClick={() => handleRejectPost(post.id)}
+                      className="w-full bg-red-600/80 hover:bg-red-500 text-white py-2 px-4 rounded-lg text-xs font-bold uppercase"
+                    >
+                      🗑 Delete
+                    </button>
+                  )}
+                </div>
+              </div>
+            ))}
+            {posts.length === 0 && (
+              <p className="text-emerald-400 italic">No posts submitted yet.</p>
+            )}
+          </div>
+        </div>
+
         <div className="mt-12 grid grid-cols-1 lg:grid-cols-2 gap-12 print:hidden">
           {/* Charity Management */}
           <div className="bg-emerald-900 p-8 rounded-[2.5rem] text-white">
@@ -384,7 +473,15 @@ const Admin: React.FC = () => {
                   <p className="font-bold text-emerald-950 mb-1">{sugg.name}</p>
                   <a href={sugg.url} target="_blank" className="text-xs text-amber-600 hover:underline mb-2 block">{sugg.url}</a>
                   <p className="text-slate-600 text-sm italic">"{sugg.reason}"</p>
-                  <p className="text-[10px] text-slate-400 mt-2 text-right">{new Date(sugg.timestamp).toLocaleDateString()}</p>
+                  <div className="flex justify-between items-center mt-2">
+                    <p className="text-[10px] text-slate-400">{new Date(sugg.timestamp).toLocaleDateString()}</p>
+                    <button onClick={async () => {
+                      if (window.confirm('Delete suggestion?')) {
+                        await deleteDoc(doc(db, 'earthbrain_charity_suggestions', sugg.id));
+                        window.location.reload();
+                      }
+                    }} className="text-xs text-red-400 hover:text-red-500 font-bold uppercase tracking-widest">Delete</button>
+                  </div>
                 </div>
               ))}
               {suggestions.length === 0 && <p className="text-slate-400 italic">No suggestions yet.</p>}

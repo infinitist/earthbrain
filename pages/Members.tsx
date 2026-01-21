@@ -19,7 +19,9 @@ const Members: React.FC = () => {
         // Subscribe to posts
         const q = query(collection(db, 'earthbrain_posts'), orderBy('timestamp', 'desc'));
         const unsubscribe = onSnapshot(q, (snapshot) => {
-            setPosts(snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() })));
+            const allPosts = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
+            // Client-side filter: Show approved posts OR my own posts
+            setPosts(allPosts.filter((p: any) => p.approved === true || p.userId === currentUser.uid));
         });
         return unsubscribe;
     }, [currentUser]);
@@ -81,7 +83,8 @@ const Members: React.FC = () => {
                 userPhoto: currentUser.photoURL,
                 imageUrl: compressedBase64, // Storing Base64 string directly
                 caption: caption,
-                timestamp: new Date().toISOString()
+                timestamp: new Date().toISOString(),
+                approved: false
             });
 
             setFile(null);
@@ -165,6 +168,11 @@ const Members: React.FC = () => {
                                     <p className="font-bold text-emerald-950 text-sm">{post.userName}</p>
                                     <p className="text-[10px] text-slate-400 uppercase tracking-widest">{new Date(post.timestamp).toLocaleDateString()}</p>
                                 </div>
+                                {!post.approved && (
+                                    <span className="ml-auto bg-amber-100 text-amber-700 text-[10px] font-bold uppercase tracking-widest px-3 py-1 rounded-full">
+                                        Pending Review
+                                    </span>
+                                )}
                             </div>
                             {post.imageUrl && (
                                 <img src={post.imageUrl} className="w-full h-auto max-h-[500px] object-cover" alt="Post" />
