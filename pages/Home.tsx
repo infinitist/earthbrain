@@ -95,7 +95,7 @@ const Home: React.FC = () => {
               She was a nurse, an educator, a writer of both prose and poetry, a creative gift giver, an explorer of religions and cultures, a human social justice activist, animal rights activist, and she left a mark wherever she went and on whomever she met. She loved learning new things and had a passion for languages. Her mother tongue was English, but she spoke reasonable French and Hindi (which would shock the rickshaw drivers in India and any Hindus elsewhere in the world that she would strike up a conversation with). She was currently learning to read and write Punjabi. Her favorite books were <em className="text-emerald-800">'A Course in Miracles'</em> and the dictionary, and she loved playing with words (eg., significance- a sign if I can see).
             </p>
             <p className="indent-12">
-              Her life goal was a <strong className="text-amber-700">new world order</strong> where people shared all 'things' and resources, and to that end she wrote her manifesto, called <em className="text-emerald-800">"Integrating Celebrating"</em> in 2017.
+              Her life goal was a <strong className="text-amber-700">culture of sharing</strong> where people connected through mutual support and shared resources, and to that end she wrote her manifesto, called <em className="text-emerald-800">"Integrating Celebrating"</em> in 2017.
             </p>
             <p className="indent-12">
               Krystina travelled extensively in India and ended up in <strong className="text-emerald-800">Varanasi</strong> for about 11 years, participating in the running of a health care clinic in a slum. Other activities included creating a collective of the NGOs in the area for resource sharing and working to emancipate the untouchable caste using information. Her favorite project was the <em className="text-amber-700">'After School Fun School'</em> for the children of the slums.
@@ -106,8 +106,9 @@ const Home: React.FC = () => {
 
             <div className="py-12 text-center bg-white/60 rounded-xl my-10 border-y-2 border-emerald-900/10 shadow-sm">
               <p className="font-serif text-3xl md:text-4xl text-emerald-900 italic m-0">
-                "Throughout her life, her smile would truly light up a room."
+                "The most beautiful thing we can experience is the mysterious. It is the source of all true art and science."
               </p>
+              <footer className="text-sm mt-4 text-emerald-700 font-sans not-italic">— Albert Einstein</footer>
             </div>
 
             <div className="mt-12 text-center">
@@ -174,9 +175,9 @@ const Home: React.FC = () => {
           >
             <span className="text-amber-400 text-6xl font-serif block mb-8">"</span>
             <blockquote className="font-serif text-3xl md:text-5xl italic mb-10 max-w-4xl mx-auto leading-tight text-emerald-50">
-              The Earth does not belong to us; we belong to the Earth. Our thoughts are her neurons. Our actions are her heartbeat.
+              "The goal of life is to make your heartbeat match the beat of the universe, to match your nature with Nature."
             </blockquote>
-            <cite className="font-bold uppercase tracking-[0.3em] text-sm text-amber-500 block">— Krystina P.</cite>
+            <footer className="font-bold uppercase tracking-[0.3em] text-sm text-amber-500 block">— Joseph Campbell</footer>
           </motion.div>
         </div>
       </section>

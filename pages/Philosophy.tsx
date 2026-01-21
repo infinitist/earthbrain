@@ -45,8 +45,8 @@ const Philosophy: React.FC = () => {
     critique: 'https://images.unsplash.com/photo-1518495973542-4542c06a5843?w=800&q=80',
     biology: 'https://images.unsplash.com/photo-1470071459604-3b5ec3a7fe05?w=800&q=80',
     mysticism: 'https://images.unsplash.com/photo-1502082553048-f009c37129b9?w=800&q=80',
-    solidarity: 'https://images.unsplash.com/photo-1502082553048-f009c37129b9?w=800&q=80',
-    library: 'https://images.unsplash.com/photo-1441974231531-c6227db76b6e?w=800&q=80',
+    solidarity: 'https://images.unsplash.com/photo-1490730141103-6cac27aaab94?w=800&q=80',
+    library: 'https://images.unsplash.com/photo-1507842217343-583bb7270b66?w=800&q=80',
   };
 
   const ImageWithLoader = ({ src, alt, className }: { src: string, alt: string, className?: string }) => (
@@ -294,12 +294,11 @@ const Philosophy: React.FC = () => {
                       By choosing simplicity—whether it's through a "visual fast" or just turning down the volume of modern media—we return our attention to what matters. It's about seeing the structure of life clearly, without the "sugar" that usually clouds our vision.
                     </p>
 
-                    <div className="flex flex-col items-center py-16 bg-emerald-950 rounded-[4rem] border border-emerald-900 my-16 shadow-2xl">
-                      <div className="flex gap-10 mb-12">
-                        <div className="w-20 h-20 bg-white border-2 border-slate-300 rounded-full shadow-2xl animate-pulse" />
-                        <div className="w-20 h-20 bg-black rounded-full shadow-2xl" />
-                      </div>
-                      <p className="font-black uppercase tracking-[0.6em] text-[12px] text-amber-500">#BlackAndWhiteWillUnite</p>
+                    <div className="flex flex-col items-center py-16 bg-emerald-950 rounded-[4rem] border border-emerald-900 my-16 shadow-2xl px-12">
+                      <p className="font-serif italic text-2xl text-white text-center leading-relaxed mb-6">
+                        "Nature is a language; try to learn the alphabet before you try to write the poetry."
+                      </p>
+                      <footer className="text-sm text-amber-500 font-sans not-italic text-center">— Krystina P.</footer>
                     </div>
                   </div>
                 </div>
@@ -360,7 +359,7 @@ const Philosophy: React.FC = () => {
           <motion.div initial={{ opacity: 0 }} whileInView={{ opacity: 1 }} transition={{ duration: 1.5 }}>
             <span className="text-amber-500 text-8xl font-serif mb-[-2rem] block opacity-20">“</span>
             <blockquote className="font-serif text-3xl md:text-5xl text-emerald-950 italic mb-12 leading-snug tracking-tight">
-              "We've spent too much time thinking we're separate. It's time to realize we're all in this together, for the good of everyone."
+              "When we return our attention to nature, we return to the parts of ourselves we once thought were separate. We aren't just visiting; we are coming home."
             </blockquote>
             <p className="font-black uppercase tracking-[0.6em] text-[12px] text-amber-600 mb-2">— Krystina P.</p>
             <p className="text-[10px] font-bold uppercase tracking-[0.4em] text-slate-300">Activist & Friend</p>

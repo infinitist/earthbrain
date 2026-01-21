@@ -38,7 +38,7 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
           <div className="md:col-span-2">
             <h3 className="font-serif text-4xl font-bold mb-6 text-amber-500">Our Earth Brain</h3>
             <p className="text-emerald-100/70 text-lg leading-relaxed max-w-md font-light">
-              A biocentric movement founded by Krystina Poludnikiewicz. Dedicated to the realization that we are the Earth thinking of herself.
+              Sharing the insights, community projects, and health teachings of Krystina Poludnikiewicz. Dedicated to honest curiosity and the simple value of connecting with the world around us.
             </p>
             <div className="mt-8 flex space-x-4">
               <a href="https://www.youtube.com/@OurEarthBrain" target="_blank" rel="noopener noreferrer" className="bg-white/10 p-3 rounded-full hover:bg-amber-500 hover:text-emerald-950 transition-all">
@@ -51,18 +51,18 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
             <h4 className="font-bold uppercase tracking-[0.2em] text-[10px] text-amber-500 mb-8">Explore</h4>
             <ul className="space-y-4 text-sm font-medium">
               <li><Link to="/" className="text-emerald-100/60 hover:text-amber-400 transition-colors">Home</Link></li>
-              <li><Link to="/philosophy" className="text-emerald-100/60 hover:text-amber-400 transition-colors">Mission & Philosophy</Link></li>
-              <li><Link to="/bio" className="text-emerald-100/60 hover:text-amber-400 transition-colors">Krystina's Bio</Link></li>
-              <li><Link to="/memorial" className="text-emerald-100/60 hover:text-amber-400 transition-colors">Memorial Services</Link></li>
+              <li><Link to="/memorial" className="text-emerald-100/60 hover:text-amber-400 transition-colors">Memorial</Link></li>
+              <li><Link to="/philosophy" className="text-emerald-100/60 hover:text-amber-400 transition-colors">Philosophy</Link></li>
+              <li><Link to="/bio" className="text-emerald-100/60 hover:text-amber-400 transition-colors">Bio</Link></li>
             </ul>
           </div>
 
           <div>
             <h4 className="font-bold uppercase tracking-[0.2em] text-[10px] text-amber-500 mb-8">Community</h4>
             <ul className="space-y-4 text-sm font-medium">
-              <li><Link to="/members" className="text-emerald-100/60 hover:text-amber-400 transition-colors">Members Area</Link></li>
-              <li><Link to="/support" className="text-emerald-100/60 hover:text-amber-400 transition-colors">Support & Donate</Link></li>
-              <li><Link to="/archive" className="text-emerald-100/60 hover:text-amber-400 transition-colors">Video Archive</Link></li>
+              <li><Link to="/members" className="text-emerald-100/60 hover:text-amber-400 transition-colors">Members</Link></li>
+              <li><Link to="/archive" className="text-emerald-100/60 hover:text-amber-400 transition-colors">Archive</Link></li>
+              <li><Link to="/support" className="text-emerald-100/60 hover:text-amber-400 transition-colors">Support</Link></li>
               <li><Link to="/admin" className="text-emerald-100/30 hover:text-amber-400 transition-colors text-[9px] uppercase tracking-widest">Organizer Admin</Link></li>
             </ul>
           </div>
