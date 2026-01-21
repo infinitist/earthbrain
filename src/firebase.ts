@@ -7,13 +7,13 @@ import { getAnalytics } from "firebase/analytics";
 
 // Config provided by user
 const firebaseConfig = {
-  apiKey: "AIzaSyCxrqoS7KkybYA0hROSZNWJ6jdtPddacL0",
-  authDomain: "earth-brain-memorial.firebaseapp.com",
-  projectId: "earth-brain-memorial",
-  storageBucket: "earth-brain-memorial.firebasestorage.app",
-  messagingSenderId: "581050138333",
-  appId: "1:581050138333:web:041b92af40859ef891e534",
-  measurementId: "G-N1MVYVWESY"
+  apiKey: "AIzaSyARwH82JRDlZK5Uy_QH1v0UzZXs3fJPWns",
+  authDomain: "ourearthbrain-final.firebaseapp.com",
+  projectId: "ourearthbrain-final",
+  storageBucket: "ourearthbrain-final.firebasestorage.app",
+  messagingSenderId: "253770635233",
+  appId: "1:253770635233:web:06a4cf87410a85d59b24a0",
+  measurementId: "G-90W3FPHHN1"
 };
 
 // Initialize Firebase
