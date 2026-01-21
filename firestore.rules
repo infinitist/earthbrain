@@ -1,0 +1,35 @@
+rules_version = '2';
+
+service cloud.firestore {
+  match /databases/{database}/documents {
+    
+    // RSVP Records: Public can write, only Admin can read
+    match /rsvps/{rsvp} {
+      allow write: if true;
+      allow read: if request.auth != null;
+    }
+    
+    // Memories: Public can write and read, only Admin can delete
+    match /earthbrain_memories/{memory} {
+      allow read, write: if true;
+      allow delete: if request.auth != null;
+    }
+    
+    // Charities: Public can read, only Admin can write
+    match /earthbrain_charities/{charity} {
+      allow read: if true;
+      allow write: if request.auth != null;
+    }
+    
+    // Charity Suggestions: Public can write, only Admin can read
+    match /earthbrain_charity_suggestions/{suggestion} {
+      allow write: if true;
+      allow read: if request.auth != null;
+    }
+
+    // Default: Deny all other access
+    match /{document=**} {
+      allow read, write: if request.auth != null;
+    }
+  }
+}

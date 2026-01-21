@@ -72,13 +72,13 @@ const Support: React.FC = () => {
                 {/* HERO: The Transcription Project */}
                 <section className="mb-20">
                     <div className="opacity-100">
-                        <span className="text-amber-500 font-bold uppercase tracking-widest text-xs mb-4 block">The Great Work</span>
-                        <h1 className="font-serif text-5xl md:text-6xl text-emerald-950 mb-8 italic">The Transcription Project</h1>
+                        <span className="text-amber-500 font-bold uppercase tracking-widest text-xs mb-4 block">Continuing the Conversation</span>
+                        <h1 className="font-serif text-5xl md:text-6xl text-emerald-950 mb-8 italic">Sharing Her Journals</h1>
                         <div className="bg-white p-10 rounded-[3rem] shadow-xl border border-emerald-50 relative overflow-hidden">
                             <div className="relative z-10">
                                 <p className="font-serif text-xl text-slate-600 leading-relaxed mb-8">
-                                    Krystina wrote every single day. Her journals contain thousands of pages of insights on bettering the world, health, and philosophy.
-                                    We are undertaking the massive task of transcribing, organizing, and publishing her complete works so the world can learn from her wisdom.
+                                    Krystina wrote every single day. Her journals are filled with thoughts on health, community, and the unique way she looked at the world.
+                                    We are working to organize and share her writings so everyone can learn from her perspective.
                                 </p>
                                 <p className="font-bold text-emerald-900 mb-8 uppercase tracking-widest text-sm">
                                     This effort requires significant funding for archival and editorial work.
@@ -90,7 +90,7 @@ const Support: React.FC = () => {
                                     className="inline-flex items-center gap-3 bg-amber-500 hover:bg-amber-400 text-emerald-950 px-10 py-5 rounded-full font-black uppercase tracking-widest text-sm transition-transform hover:scale-105 shadow-xl"
                                 >
                                     <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 10V3L4 14h7v7l9-11h-7z" /></svg>
-                                    Fund the Transcription
+                                    Fund the Journals
                                 </a>
                             </div>
                             <div className="absolute top-0 right-0 w-64 h-64 bg-amber-100/50 rounded-full blur-3xl -translate-y-1/2 translate-x-1/3"></div>
@@ -108,7 +108,7 @@ const Support: React.FC = () => {
                         {/* Hardcoded Favorites (fallback if DB empty) */}
                         <a href="https://www.basichumanneeds.org/donate" target="_blank" rel="noreferrer" className="bg-white p-8 rounded-[2.5rem] border border-emerald-50 hover:shadow-xl transition-all group block">
                             <h3 className="font-serif text-2xl text-emerald-950 mb-2 group-hover:text-amber-600 transition-colors">Basic Human Needs</h3>
-                            <p className="text-xs font-bold uppercase tracking-widest text-emerald-700 mb-4">A Friend of the Movement</p>
+                            <p className="text-xs font-bold uppercase tracking-widest text-emerald-700 mb-4">A Cause She Valued</p>
                             <p className="text-slate-500 text-sm">Supporting the fundamental rights of every human being to survive and thrive.</p>
                         </a>
 
@@ -125,7 +125,7 @@ const Support: React.FC = () => {
                 <section className="bg-emerald-900 rounded-[3rem] p-10 md:p-16 text-white text-center">
                     <h2 className="font-serif text-3xl md:text-4xl mb-6 text-amber-500">Suggest a Cause</h2>
                     <p className="text-emerald-100 max-w-xl mx-auto mb-10 leading-relaxed">
-                        Know of a charity that aligns with Krystina's vision? Suggest it here for inclusion in our curated list.
+                        Know of a cause that aligns with the things Krystina cared about? Suggest it here for the list.
                     </p>
 
                     {done ? (
@@ -152,7 +152,7 @@ const Support: React.FC = () => {
                                 onChange={e => setSuggestion({ ...suggestion, url: e.target.value })}
                             />
                             <textarea
-                                placeholder="Why does this align with her vision?"
+                                placeholder="Why do you think she would have liked this?"
                                 className="w-full p-4 bg-emerald-950/50 border border-emerald-800 rounded-xl focus:ring-2 focus:ring-amber-500 outline-none placeholder:text-emerald-700 min-h-[100px]"
                                 value={suggestion.reason}
                                 onChange={e => setSuggestion({ ...suggestion, reason: e.target.value })}

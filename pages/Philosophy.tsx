@@ -159,7 +159,8 @@ const Philosophy: React.FC = () => {
                     </p>
 
                     <blockquote className="font-serif italic text-2xl text-emerald-900 border-l-4 border-amber-500 pl-10 py-8 bg-emerald-50 rounded-r-[2.5rem] my-12">
-                      "We aren't separate from the world; we are the world's way of noticing itself."
+                      "The nitrogen in our DNA, the calcium in our teeth, the iron in our blood, the carbon in our apple pies were made in the interiors of collapsing stars. We are made of starstuff."
+                      <footer className="text-sm mt-4 text-emerald-700 font-sans not-italic">— Carl Sagan</footer>
                     </blockquote>
                   </div>
                 </div>
@@ -191,8 +192,9 @@ const Philosophy: React.FC = () => {
 
                     <div className="bg-emerald-950 text-white p-12 rounded-[3rem] shadow-2xl relative overflow-hidden my-16 border border-emerald-900">
                       <p className="font-serif italic text-2xl leading-relaxed opacity-90">
-                        "The silo is a mindset that keeps us from seeing the abundance right in front of us. When we let go of the need to own, we find the freedom to live."
+                        "If you want to understand the universe, think in terms of energy, frequency and vibration."
                       </p>
+                      <footer className="text-sm mt-4 text-amber-500 font-sans not-italic">— Nikola Tesla</footer>
                     </div>
                   </div>
                 </div>
@@ -227,7 +229,10 @@ const Philosophy: React.FC = () => {
                     </p>
 
                     <div className="bg-emerald-50 p-12 rounded-[3rem] border border-emerald-100 my-16 shadow-sm">
-                      <p className="text-slate-700 italic text-xl leading-relaxed">"Health is the most honest conversation you can have with yourself. Hydration is where that conversation begins."</p>
+                      <p className="text-slate-700 italic text-xl leading-relaxed">
+                        "Your body is the ground across which the universe is thinking."
+                      </p>
+                      <footer className="text-sm mt-4 text-emerald-900 font-sans not-italic">— Krystina P.</footer>
                     </div>
                   </div>
                 </div>
@@ -258,7 +263,8 @@ const Philosophy: React.FC = () => {
                     </p>
 
                     <blockquote className="font-serif italic text-2xl text-amber-600 border-l-4 border-emerald-900 pl-10 py-8 my-16 bg-slate-50 rounded-r-3xl">
-                      "We stand up because we can. We speak because they can't. Service is how we prove we are listening to the world."
+                      "The privilege of a lifetime is to become who you truly are."
+                      <footer className="text-sm mt-4 text-emerald-950 font-sans not-italic">— Joseph Campbell</footer>
                     </blockquote>
                   </div>
                 </div>
@@ -305,7 +311,10 @@ const Philosophy: React.FC = () => {
               <article className="space-y-12">
                 <div className="text-center mb-16">
                   <h2 className="font-serif text-4xl text-emerald-950 mb-6 tracking-tight italic">Books She Loved</h2>
-                  <p className="text-xl text-slate-500 font-serif italic max-w-2xl mx-auto leading-relaxed">"She always said that the right book at the right time is like a conversation with a friend you haven't met yet."</p>
+                  <p className="text-xl text-slate-500 font-serif italic max-w-2xl mx-auto leading-relaxed">
+                    "I read to know I'm not alone."
+                    <footer className="text-sm mt-2 text-slate-400 font-sans not-italic">— C.S. Lewis</footer>
+                  </p>
                 </div>
 
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
@@ -333,7 +342,10 @@ const Philosophy: React.FC = () => {
                     className="rounded-[3rem] shadow-2xl h-[32rem] w-full brightness-75"
                   />
                   <div className="bg-emerald-900 text-white p-12 rounded-b-[3rem] -mt-6 relative z-10 border-x border-b border-emerald-800 shadow-2xl">
-                    <p className="font-serif italic text-2xl leading-relaxed text-center">"Truth isn't found in a search engine; it's found when you slow down enough to listen to the people who came before us."</p>
+                    <p className="font-serif italic text-2xl leading-relaxed text-center">
+                      "A book is a way to look behind a door that someone else left open for us."
+                    </p>
+                    <footer className="text-sm mt-4 text-emerald-500 font-sans not-italic text-center">— Krystina P.</footer>
                   </div>
                 </motion.div>
               </article>

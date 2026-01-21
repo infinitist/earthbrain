@@ -2,7 +2,8 @@
 import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { RSVPRecord } from '../types';
-import { db } from '../src/firebase';
+import { auth, db } from '../src/firebase';
+import { onAuthStateChanged, signInWithEmailAndPassword, signOut, User } from 'firebase/auth';
 import { collection, getDocs, orderBy, query, addDoc, deleteDoc, doc } from 'firebase/firestore';
 
 const Admin: React.FC = () => {
@@ -11,31 +12,38 @@ const Admin: React.FC = () => {
   const [charities, setCharities] = useState<any[]>([]);
   const [suggestions, setSuggestions] = useState<any[]>([]);
   const [newCharity, setNewCharity] = useState({ name: '', url: '', description: '' });
-  const [isAuthorized, setIsAuthorized] = useState(false);
-  const [passphrase, setPassphrase] = useState('');
+  const [user, setUser] = useState<User | null>(null);
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const [loading, setLoading] = useState(false);
   const [lastSync, setLastSync] = useState<string | null>(null);
 
   useEffect(() => {
+    const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
+      setUser(currentUser);
+    });
+    return () => unsubscribe();
+  }, []);
+
+  useEffect(() => {
+    if (!user) return;
+
     const saved = localStorage.getItem('earth_brain_admin_data');
     if (saved) {
       setRecords(JSON.parse(saved));
       setLastSync(new Date().toLocaleTimeString());
     }
 
-    // Fetch Memories, Charities, Suggestions from Firebase
     const fetchData = async () => {
       try {
-        // Memories
         const qMem = query(collection(db, 'earthbrain_memories'), orderBy('timestamp', 'desc'));
         const snapMem = await getDocs(qMem);
         setMemories(snapMem.docs.map(doc => ({ id: doc.id, ...doc.data() })));
 
-        // Charities
         const qChar = query(collection(db, 'earthbrain_charities'), orderBy('name'));
         const snapChar = await getDocs(qChar);
         setCharities(snapChar.docs.map(doc => ({ id: doc.id, ...doc.data() })));
 
-        // Suggestions
         const qSugg = query(collection(db, 'earthbrain_charity_suggestions'), orderBy('timestamp', 'desc'));
         const snapSugg = await getDocs(qSugg);
         setSuggestions(snapSugg.docs.map(doc => ({ id: doc.id, ...doc.data() })));
@@ -45,15 +53,22 @@ const Admin: React.FC = () => {
       }
     };
     fetchData();
-  }, [isAuthorized]); // refetch when authorized to be safe, though mainly on mount
+  }, [user]);
 
-  const handleLogin = (e: React.FormEvent) => {
+  const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (passphrase.toLowerCase() === 'earthbrain') {
-      setIsAuthorized(true);
-    } else {
-      alert('Incorrect passphrase. Hint: earthbrain');
+    setLoading(true);
+    try {
+      await signInWithEmailAndPassword(auth, email, password);
+    } catch (err: any) {
+      alert('Login failed: ' + err.message);
+    } finally {
+      setLoading(false);
     }
+  };
+
+  const handleLogout = async () => {
+    await signOut(auth);
   };
 
   const handleAddCharity = async (e: React.FormEvent) => {
@@ -94,7 +109,7 @@ const Admin: React.FC = () => {
     return acc;
   }, { totalGuests: 0, serviceCount: 0, receptionCount: 0 });
 
-  if (!isAuthorized) {
+  if (!user) {
     return (
       <div className="min-h-[70vh] flex items-center justify-center bg-slate-50 px-6">
         <motion.div
@@ -106,17 +121,29 @@ const Admin: React.FC = () => {
             <svg className="w-10 h-10" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002-2zm10-10V7a4 4 0 00-8 0v4h8z" /></svg>
           </div>
           <h2 className="font-serif text-3xl text-center text-emerald-950 mb-2">Organizer Access</h2>
-          <p className="text-slate-500 text-center text-sm mb-8">Enter passphrase to view the RSVP Dashboard</p>
+          <p className="text-slate-500 text-center text-sm mb-8">Login to view the RSVP Dashboard</p>
           <form onSubmit={handleLogin} className="space-y-4">
             <input
-              type="password"
-              placeholder="Passphrase"
-              value={passphrase}
-              onChange={(e) => setPassphrase(e.target.value)}
+              type="email"
+              placeholder="Admin Email"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
               className="w-full bg-slate-50 border border-slate-200 rounded-2xl p-4 focus:ring-2 focus:ring-amber-500 outline-none transition-all"
+              required
             />
-            <button className="w-full bg-emerald-950 text-white font-black py-4 rounded-2xl uppercase tracking-widest text-xs hover:bg-emerald-800 transition-all shadow-lg">
-              Unlock Dashboard
+            <input
+              type="password"
+              placeholder="Password"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+              className="w-full bg-slate-50 border border-slate-200 rounded-2xl p-4 focus:ring-2 focus:ring-amber-500 outline-none transition-all"
+              required
+            />
+            <button
+              disabled={loading}
+              className="w-full bg-emerald-950 text-white font-black py-4 rounded-2xl uppercase tracking-widest text-xs hover:bg-emerald-800 transition-all shadow-lg disabled:opacity-50"
+            >
+              {loading ? 'Authenticating...' : 'Unlock Dashboard'}
             </button>
           </form>
         </motion.div>
@@ -141,6 +168,9 @@ const Admin: React.FC = () => {
               <h1 className="font-serif text-5xl md:text-7xl">RSVP Dashboard</h1>
             </div>
             <div className="flex gap-4">
+              <button onClick={handleLogout} className="px-6 py-3 bg-white/10 hover:bg-white/20 text-white rounded-xl text-[10px] font-black uppercase tracking-widest transition-all">
+                Logout
+              </button>
               <button onClick={clearData} className="px-6 py-3 bg-white/10 hover:bg-red-500/20 text-white rounded-xl text-[10px] font-black uppercase tracking-widest transition-all">
                 Clear All Data
               </button>

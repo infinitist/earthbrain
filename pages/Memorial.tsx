@@ -94,7 +94,7 @@ const Memorial: React.FC = () => {
           <div className="opacity-100">
             <h1 className="font-serif text-5xl md:text-7xl text-emerald-950 mb-6 tracking-tight">Celebration of Life</h1>
             <p className="text-xl md:text-2xl text-slate-600 font-serif italic leading-relaxed">
-              Honoring the visionary life and eternal spirit of Krystina Poludnikiewicz.
+              Celebrating the unique life, honest curiosity, and caring spirit of Krystina Poludnikiewicz.
             </p>
           </div>
         </div>
@@ -110,14 +110,14 @@ const Memorial: React.FC = () => {
                     <h4 className="font-bold text-xl text-emerald-950">Memorial Service</h4>
                     <span className="text-amber-600 font-bold bg-amber-50 px-3 py-1 rounded-full text-[10px] tracking-widest uppercase">3PM — 4PM</span>
                   </div>
-                  <p className="text-slate-600 leading-relaxed text-sm font-light">A biocentric ceremony honoring Krystina's journey and her deep connection to the Earth's wisdom.</p>
+                  <p className="text-slate-600 leading-relaxed text-sm font-light">A shared ceremony to celebrate Krystina's journey and her honest look at the world around her.</p>
                 </div>
                 <div className="relative pl-6 border-l-2 border-emerald-900">
                   <div className="flex justify-between items-baseline mb-3">
                     <h4 className="font-bold text-xl text-emerald-950">Reception</h4>
                     <span className="text-emerald-700 font-bold bg-emerald-50 px-3 py-1 rounded-full text-[10px] tracking-widest uppercase">4PM — 7PM</span>
                   </div>
-                  <p className="text-slate-600 leading-relaxed text-sm font-light">Gathering to share stories, witness her archive, and nurture the seeds of the movement she founded.</p>
+                  <p className="text-slate-600 leading-relaxed text-sm font-light">Gathering to share stories, look through her notebooks, and continue the conversations she started.</p>
                 </div>
               </div>
             </div>
@@ -239,8 +239,8 @@ const Memorial: React.FC = () => {
                 <div className="w-24 h-24 bg-amber-500 rounded-full flex items-center justify-center mx-auto mb-10 text-emerald-900 shadow-2xl">
                   <svg className="w-12 h-12" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={3} d="M5 13l4 4L19 7" /></svg>
                 </div>
-                <h3 className="font-serif text-5xl mb-6 leading-tight">Your RSVP is Received</h3>
-                <p className="text-emerald-200 mb-12 text-lg font-light leading-relaxed">Your attendance has been registered on the server.</p>
+                <h3 className="font-serif text-5xl mb-6 leading-tight">Thank you</h3>
+                <p className="text-emerald-200 mb-12 text-lg font-light leading-relaxed">Your response has been saved. We look forward to seeing you.</p>
 
                 <div className="space-y-4">
                   <button

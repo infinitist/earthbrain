@@ -84,10 +84,10 @@ const Archive: React.FC = () => {
       <header className="pt-64 pb-20 px-6 bg-slate-50 border-b border-emerald-100 text-center">
         <div className="container mx-auto max-w-6xl">
           <div className="opacity-100">
-            <span className="text-amber-500 font-black uppercase tracking-[0.5em] text-[10px] block mb-6">Master Resource Center</span>
+            <span className="text-amber-500 font-black uppercase tracking-[0.5em] text-[10px] block mb-6">Video Library</span>
             <h1 className="font-serif text-6xl md:text-9xl text-emerald-950 mb-8 tracking-tighter leading-none italic">The Archive</h1>
             <p className="font-serif italic text-2xl text-slate-500 max-w-3xl mx-auto leading-relaxed opacity-80">
-              "We preserve her words as a living frequency, vibrating through the collective mind of the planet."
+              "We share these videos to keep her conversations alive and continue exploring the ideas she cared about."
             </p>
           </div>
 
@@ -120,7 +120,7 @@ const Archive: React.FC = () => {
         {/* Empty State */}
         {filtered.length === 0 && (
           <div className="text-center py-40">
-            <p className="font-serif text-3xl text-slate-400 italic">This wing of the archive is still being digitized.</p>
+            <p className="font-serif text-3xl text-slate-400 italic">This part of the library is still being updated.</p>
           </div>
         )}
       </section>
