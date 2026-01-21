@@ -42,7 +42,7 @@ const Memorial: React.FC = () => {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setIsSyncing(true);
-    
+
     // 1. Prepare Data
     const record: RSVPRecord = {
       ...formData,
@@ -86,20 +86,17 @@ const Memorial: React.FC = () => {
   const googleMapsUrl = "https://www.google.com/maps/dir//Glen+Oaks+Funeral+Home+%26+Cemetery,+3164+Ninth+Line,+Oakville,+ON+L6H+7A8";
 
   return (
-    <div>
+    <div className="pt-64">
       <MemorialBanner />
-      
+
       <section className="py-20 container mx-auto px-6">
         <div className="max-w-4xl mx-auto text-center mb-16">
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-          >
+          <div className="opacity-100">
             <h1 className="font-serif text-5xl md:text-7xl text-emerald-950 mb-6 tracking-tight">Celebration of Life</h1>
             <p className="text-xl md:text-2xl text-slate-600 font-serif italic leading-relaxed">
               Honoring the visionary life and eternal spirit of Krystina Poludnikiewicz.
             </p>
-          </motion.div>
+          </div>
         </div>
 
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-16">
@@ -133,29 +130,29 @@ const Memorial: React.FC = () => {
                 <p className="font-bold text-emerald-950 text-xl mb-1">Glen Oaks Funeral Home</p>
                 <p className="text-slate-500 text-sm font-light tracking-wide">3164 Ninth Line, Oakville ON L6H 7A8</p>
               </div>
-              
+
               <div className="relative aspect-video w-full rounded-[2rem] overflow-hidden shadow-2xl group cursor-pointer border border-emerald-100">
-                <img 
-                  src="https://images.unsplash.com/photo-1542273917363-3b1817f69a2d?auto=format&fit=crop&q=80&w=2000" 
+                <img
+                  src="https://images.unsplash.com/photo-1542273917363-3b1817f69a2d?auto=format&fit=crop&q=80&w=2000"
                   alt="Aerial view of peaceful landscape"
                   className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105 brightness-90"
                 />
                 <div className="absolute inset-0 bg-emerald-950/20 group-hover:bg-emerald-950/40 transition-all flex flex-col items-center justify-center text-center p-6">
-                   <div className="w-16 h-16 bg-white rounded-full flex items-center justify-center shadow-2xl mb-4 text-emerald-900 transform group-hover:scale-110 transition-all">
-                     <svg className="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
-                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
-                     </svg>
-                   </div>
-                   <h4 className="text-white font-serif text-2xl mb-4">Glen Oaks Cemetery</h4>
-                   <a 
+                  <div className="w-16 h-16 bg-white rounded-full flex items-center justify-center shadow-2xl mb-4 text-emerald-900 transform group-hover:scale-110 transition-all">
+                    <svg className="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
+                    </svg>
+                  </div>
+                  <h4 className="text-white font-serif text-2xl mb-4">Glen Oaks Cemetery</h4>
+                  <a
                     href={googleMapsUrl}
                     target="_blank"
                     rel="noopener noreferrer"
                     className="bg-amber-500 hover:bg-amber-400 text-emerald-950 px-8 py-3 rounded-full font-black text-[10px] uppercase tracking-widest transition-all shadow-xl"
-                   >
-                     Launch Live Navigation
-                   </a>
+                  >
+                    Launch Live Navigation
+                  </a>
                 </div>
               </div>
             </div>
@@ -179,20 +176,20 @@ const Memorial: React.FC = () => {
                   <div className="space-y-6">
                     <div>
                       <label className="block text-[10px] uppercase tracking-widest font-black text-amber-500 mb-2">Full Name</label>
-                      <input 
-                        type="text" 
+                      <input
+                        type="text"
                         required
                         value={formData.name}
-                        onChange={e => setFormData({...formData, name: e.target.value})}
+                        onChange={e => setFormData({ ...formData, name: e.target.value })}
                         className="w-full bg-emerald-950/50 border border-emerald-800 rounded-2xl p-5 text-white focus:outline-none focus:ring-2 focus:ring-amber-500 transition-all placeholder:text-emerald-800"
                         placeholder="Name of Primary Guest"
                       />
                     </div>
                     <div>
                       <label className="block text-[10px] uppercase tracking-widest font-black text-amber-500 mb-2">Attendance Status</label>
-                      <select 
+                      <select
                         value={formData.attending}
-                        onChange={e => setFormData({...formData, attending: e.target.value as any})}
+                        onChange={e => setFormData({ ...formData, attending: e.target.value as any })}
                         className="w-full bg-emerald-950/50 border border-emerald-800 rounded-2xl p-5 text-white focus:outline-none focus:ring-2 focus:ring-amber-500 transition-all appearance-none cursor-pointer"
                       >
                         <option value="both">Both Service & Reception</option>
@@ -204,28 +201,28 @@ const Memorial: React.FC = () => {
                     <div className="grid grid-cols-2 gap-6">
                       <div>
                         <label className="block text-[10px] uppercase tracking-widest font-black text-amber-500 mb-2">Guests</label>
-                        <input 
-                          type="number" 
+                        <input
+                          type="number"
                           min="1"
                           value={formData.guests}
-                          onChange={e => setFormData({...formData, guests: parseInt(e.target.value)})}
+                          onChange={e => setFormData({ ...formData, guests: parseInt(e.target.value) })}
                           className="w-full bg-emerald-950/50 border border-emerald-800 rounded-2xl p-5 text-white"
                         />
                       </div>
                     </div>
                     <div>
                       <label className="block text-[10px] uppercase tracking-widest font-black text-amber-500 mb-2">Family Note</label>
-                      <textarea 
+                      <textarea
                         rows={4}
                         value={formData.message}
-                        onChange={e => setFormData({...formData, message: e.target.value})}
+                        onChange={e => setFormData({ ...formData, message: e.target.value })}
                         className="w-full bg-emerald-950/50 border border-emerald-800 rounded-2xl p-5 text-white placeholder:text-emerald-800"
                         placeholder="Share a thought with the Poludnikiewicz family..."
                       />
                     </div>
                   </div>
-                  <button 
-                    type="submit" 
+                  <button
+                    type="submit"
                     disabled={isSyncing}
                     className="w-full bg-amber-500 hover:bg-amber-400 disabled:bg-slate-700 text-emerald-950 font-black py-6 rounded-3xl uppercase tracking-widest shadow-2xl transition-all transform active:scale-95"
                   >
@@ -234,7 +231,7 @@ const Memorial: React.FC = () => {
                 </form>
               </>
             ) : (
-              <motion.div 
+              <motion.div
                 initial={{ opacity: 0, scale: 0.9 }}
                 animate={{ opacity: 1, scale: 1 }}
                 className="text-center py-20"
@@ -244,15 +241,15 @@ const Memorial: React.FC = () => {
                 </div>
                 <h3 className="font-serif text-5xl mb-6 leading-tight">Your RSVP is Received</h3>
                 <p className="text-emerald-200 mb-12 text-lg font-light leading-relaxed">Your attendance has been registered on the server.</p>
-                
+
                 <div className="space-y-4">
-                  <button 
+                  <button
                     onClick={() => setSubmitted(false)}
                     className="w-full bg-white/10 hover:bg-white/20 px-10 py-4 rounded-2xl text-white font-bold uppercase tracking-widest text-[10px] transition-all"
                   >
                     Update Information
                   </button>
-                  <button 
+                  <button
                     onClick={handleEmailFallback}
                     className="w-full border border-amber-500/30 text-amber-400 hover:bg-amber-500/10 px-10 py-4 rounded-2xl font-bold uppercase tracking-widest text-[10px] transition-all"
                   >

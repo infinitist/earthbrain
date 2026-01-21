@@ -2,9 +2,15 @@
 import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { RSVPRecord } from '../types';
+import { db } from '../src/firebase';
+import { collection, getDocs, orderBy, query, addDoc, deleteDoc, doc } from 'firebase/firestore';
 
 const Admin: React.FC = () => {
   const [records, setRecords] = useState<RSVPRecord[]>([]);
+  const [memories, setMemories] = useState<any[]>([]);
+  const [charities, setCharities] = useState<any[]>([]);
+  const [suggestions, setSuggestions] = useState<any[]>([]);
+  const [newCharity, setNewCharity] = useState({ name: '', url: '', description: '' });
   const [isAuthorized, setIsAuthorized] = useState(false);
   const [passphrase, setPassphrase] = useState('');
   const [lastSync, setLastSync] = useState<string | null>(null);
@@ -15,7 +21,31 @@ const Admin: React.FC = () => {
       setRecords(JSON.parse(saved));
       setLastSync(new Date().toLocaleTimeString());
     }
-  }, []);
+
+    // Fetch Memories, Charities, Suggestions from Firebase
+    const fetchData = async () => {
+      try {
+        // Memories
+        const qMem = query(collection(db, 'earthbrain_memories'), orderBy('timestamp', 'desc'));
+        const snapMem = await getDocs(qMem);
+        setMemories(snapMem.docs.map(doc => ({ id: doc.id, ...doc.data() })));
+
+        // Charities
+        const qChar = query(collection(db, 'earthbrain_charities'), orderBy('name'));
+        const snapChar = await getDocs(qChar);
+        setCharities(snapChar.docs.map(doc => ({ id: doc.id, ...doc.data() })));
+
+        // Suggestions
+        const qSugg = query(collection(db, 'earthbrain_charity_suggestions'), orderBy('timestamp', 'desc'));
+        const snapSugg = await getDocs(qSugg);
+        setSuggestions(snapSugg.docs.map(doc => ({ id: doc.id, ...doc.data() })));
+
+      } catch (err) {
+        console.error("Error loading admin data", err);
+      }
+    };
+    fetchData();
+  }, [isAuthorized]); // refetch when authorized to be safe, though mainly on mount
 
   const handleLogin = (e: React.FormEvent) => {
     e.preventDefault();
@@ -24,6 +54,28 @@ const Admin: React.FC = () => {
     } else {
       alert('Incorrect passphrase. Hint: earthbrain');
     }
+  };
+
+  const handleAddCharity = async (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!newCharity.name) return;
+    try {
+      await addDoc(collection(db, 'earthbrain_charities'), newCharity);
+      alert('Charity Added');
+      setNewCharity({ name: '', url: '', description: '' });
+      // In a real app we'd refetch or update local state manually
+      window.location.reload();
+    } catch (err) {
+      console.error(err);
+      alert('Error adding charity');
+    }
+  };
+
+  const handleDeleteCharity = async (id: string) => {
+    if (!window.confirm('Delete this charity?')) return;
+    // Note: Deleting requires the deleteDoc import which we need to add
+    alert('Deletion requires re-login or refresh to reflect (Simulated for safety)');
+    // actually implementing delete requires importing { deleteDoc, doc } from firebase/firestore
   };
 
   const clearData = () => {
@@ -45,7 +97,7 @@ const Admin: React.FC = () => {
   if (!isAuthorized) {
     return (
       <div className="min-h-[70vh] flex items-center justify-center bg-slate-50 px-6">
-        <motion.div 
+        <motion.div
           initial={{ opacity: 0, scale: 0.95 }}
           animate={{ opacity: 1, scale: 1 }}
           className="bg-white p-12 rounded-[3rem] shadow-2xl max-w-md w-full border border-emerald-100"
@@ -56,7 +108,7 @@ const Admin: React.FC = () => {
           <h2 className="font-serif text-3xl text-center text-emerald-950 mb-2">Organizer Access</h2>
           <p className="text-slate-500 text-center text-sm mb-8">Enter passphrase to view the RSVP Dashboard</p>
           <form onSubmit={handleLogin} className="space-y-4">
-            <input 
+            <input
               type="password"
               placeholder="Passphrase"
               value={passphrase}
@@ -138,13 +190,12 @@ const Admin: React.FC = () => {
                 {records.length > 0 ? records.map((record) => (
                   <tr key={record.id} className="hover:bg-emerald-50/30 transition-colors">
                     <td className="p-6">
-                       <p className="font-bold text-emerald-950">{record.name}</p>
-                       <p className="text-[9px] text-slate-400 uppercase tracking-tighter">{new Date(record.timestamp).toLocaleString()}</p>
+                      <p className="font-bold text-emerald-950">{record.name}</p>
+                      <p className="text-[9px] text-slate-400 uppercase tracking-tighter">{new Date(record.timestamp).toLocaleString()}</p>
                     </td>
                     <td className="p-6">
-                      <span className={`px-3 py-1 rounded-full text-[9px] font-black uppercase tracking-widest ${
-                        record.attending === 'no' ? 'bg-red-50 text-red-600' : 'bg-emerald-100 text-emerald-800'
-                      }`}>
+                      <span className={`px-3 py-1 rounded-full text-[9px] font-black uppercase tracking-widest ${record.attending === 'no' ? 'bg-red-50 text-red-600' : 'bg-emerald-100 text-emerald-800'
+                        }`}>
                         {record.attending}
                       </span>
                     </td>
@@ -167,17 +218,93 @@ const Admin: React.FC = () => {
         </div>
 
         <div className="mt-12 p-8 bg-emerald-900 rounded-[2.5rem] text-white print:hidden">
-           <h4 className="font-serif text-2xl mb-4 text-amber-500">How to integrate with Google Sheets</h4>
-           <p className="text-emerald-100 text-sm mb-6 leading-relaxed">
-             This dashboard currently stores data locally on this device. To enable a shared "Cloud" database for $0:
-           </p>
-           <ol className="text-xs space-y-3 text-emerald-200 list-decimal pl-6">
-             <li>Create a Google Sheet.</li>
-             <li>Go to Extensions &gt; Apps Script.</li>
-             <li>Paste the "doPost" code provided in your setup instructions.</li>
-             <li>Deploy as a Web App (Access: Anyone).</li>
-             <li>Paste the resulting URL into your <code className="bg-emerald-950 px-2 py-1 rounded text-amber-400">constants.tsx</code> file.</li>
-           </ol>
+          <div className="flex justify-between items-center mb-6">
+            <h4 className="font-serif text-3xl text-amber-500">Archived Memories</h4>
+            <span className="text-xs bg-emerald-800 px-3 py-1 rounded-full">{memories.length} Stories Collected</span>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6 max-h-[500px] overflow-y-auto">
+            {memories.map((mem: any) => (
+              <div key={mem.id} className="bg-emerald-950/50 p-6 rounded-2xl border border-emerald-800">
+                <p className="font-serif italic text-lg text-emerald-50 mb-4">"{mem.memory}"</p>
+                <div className="flex justify-between items-center text-xs text-emerald-400 font-bold uppercase tracking-widest">
+                  <span>— {mem.name || 'Anonymous'}</span>
+                  <span>{new Date(mem.timestamp).toLocaleDateString()}</span>
+                </div>
+              </div>
+            ))}
+            {memories.length === 0 && (
+              <p className="text-emerald-400 italic">No memories submitted yet.</p>
+            )}
+          </div>
+        </div>
+
+        <div className="mt-12 grid grid-cols-1 lg:grid-cols-2 gap-12 print:hidden">
+          {/* Charity Management */}
+          <div className="bg-emerald-900 p-8 rounded-[2.5rem] text-white">
+            <h4 className="font-serif text-3xl text-amber-500 mb-6">Manage Charities</h4>
+
+            <form onSubmit={handleAddCharity} className="space-y-4 mb-8 bg-black/20 p-6 rounded-2xl">
+              <input
+                className="w-full p-3 bg-emerald-950/50 border border-emerald-800 rounded-xl text-sm"
+                placeholder="Charity Name"
+                value={newCharity.name}
+                onChange={e => setNewCharity({ ...newCharity, name: e.target.value })}
+              />
+              <input
+                className="w-full p-3 bg-emerald-950/50 border border-emerald-800 rounded-xl text-sm"
+                placeholder="URL"
+                value={newCharity.url}
+                onChange={e => setNewCharity({ ...newCharity, url: e.target.value })}
+              />
+              <input
+                className="w-full p-3 bg-emerald-950/50 border border-emerald-800 rounded-xl text-sm"
+                placeholder="Description"
+                value={newCharity.description}
+                onChange={e => setNewCharity({ ...newCharity, description: e.target.value })}
+              />
+              <button className="w-full bg-emerald-700 hover:bg-emerald-600 py-2 rounded-xl text-xs font-bold uppercase tracking-widest">
+                Add Charity
+              </button>
+            </form>
+
+            <div className="space-y-3 max-h-[300px] overflow-y-auto">
+              {charities.map((char: any) => (
+                <div key={char.id} className="flex justify-between items-center bg-emerald-950/30 p-4 rounded-xl">
+                  <div>
+                    <p className="font-bold text-sm">{char.name}</p>
+                    <p className="text-[10px] text-emerald-400">{char.url}</p>
+                  </div>
+                  <button onClick={async () => {
+                    if (window.confirm('Delete?')) {
+                      await deleteDoc(doc(db, 'earthbrain_charities', char.id));
+                      window.location.reload();
+                    }
+                  }} className="text-xs text-red-400 hover:text-red-300">Delete</button>
+                </div>
+              ))}
+            </div>
+          </div>
+
+          {/* User Suggestions */}
+          <div className="bg-white p-8 rounded-[2.5rem] border border-emerald-50">
+            <h4 className="font-serif text-3xl text-emerald-900 mb-6">User Suggestions</h4>
+            <div className="space-y-4 max-h-[400px] overflow-y-auto">
+              {suggestions.map((sugg: any) => (
+                <div key={sugg.id} className="bg-slate-50 p-6 rounded-2xl">
+                  <p className="font-bold text-emerald-950 mb-1">{sugg.name}</p>
+                  <a href={sugg.url} target="_blank" className="text-xs text-amber-600 hover:underline mb-2 block">{sugg.url}</a>
+                  <p className="text-slate-600 text-sm italic">"{sugg.reason}"</p>
+                  <p className="text-[10px] text-slate-400 mt-2 text-right">{new Date(sugg.timestamp).toLocaleDateString()}</p>
+                </div>
+              ))}
+              {suggestions.length === 0 && <p className="text-slate-400 italic">No suggestions yet.</p>}
+            </div>
+          </div>
+        </div>
+
+        <div className="mt-12 p-8 bg-white/50 rounded-[2.5rem] border border-emerald-50 print:hidden">
+          <h4 className="font-serif text-2xl mb-4 text-emerald-900">Legacy Sync Instructions</h4>
         </div>
       </div>
     </div>

@@ -17,22 +17,24 @@ const Navbar: React.FC = () => {
   }, []);
 
   const navLinks = [
-    { name: 'Home', path: '/' },
     { name: 'Memorial', path: '/memorial' },
     { name: 'Philosophy', path: '/philosophy' },
+    { name: 'Bio', path: '/bio' },
+    { name: 'Members', path: '/members' },
+    { name: 'Support', path: '/support' },
     { name: 'Archive', path: '/archive' },
   ];
 
   const isHome = location.pathname === '/';
-  
+
   // Navbar should be transparent only on Home page when not scrolled.
   // On all other pages (Memorial, Archive, etc), it MUST be Emerald to ensure visibility.
-  const navbarBackgroundClass = (!isHome || isScrolled) 
-    ? 'bg-emerald-950 shadow-xl py-3 border-b border-emerald-900' 
-    : 'bg-transparent py-5';
+  const navbarBackgroundClass = (!isHome || isScrolled)
+    ? 'bg-emerald-950 shadow-xl py-3 border-b border-emerald-900'
+    : 'bg-transparent py-5 border-b border-transparent';
 
   return (
-    <nav 
+    <nav
       className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${navbarBackgroundClass}`}
     >
       <div className="container mx-auto px-6 flex justify-between items-center">
@@ -45,7 +47,7 @@ const Navbar: React.FC = () => {
               <circle cx="12" cy="12" r="2.5" className="animate-pulse" />
             </svg>
           </div>
-          
+
           <span className="font-serif text-2xl md:text-3xl font-bold text-white tracking-wider group-hover:text-amber-400 transition-colors">
             Our Earth Brain
           </span>
@@ -57,15 +59,19 @@ const Navbar: React.FC = () => {
             <Link
               key={link.path}
               to={link.path}
-              className={`text-[11px] font-bold tracking-[0.25em] uppercase transition-all hover:text-amber-400 ${
-                location.pathname === link.path ? 'text-amber-400' : 'text-white'
-              }`}
+              className={`text-[11px] font-bold tracking-[0.25em] uppercase transition-all flex items-center gap-2 hover:text-amber-400 ${location.pathname === link.path ? 'text-amber-400' : 'text-white'
+                }`}
             >
+              {link.name === 'Support' && (
+                <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 10V3L4 14h7v7l9-11h-7z" />
+                </svg>
+              )}
               {link.name}
             </Link>
           ))}
-          <Link 
-            to="/memorial" 
+          <Link
+            to="/memorial"
             className="bg-amber-500 hover:bg-amber-400 text-emerald-950 px-7 py-2.5 rounded-full text-[11px] font-black uppercase tracking-[0.15em] transition-all transform hover:scale-105 active:scale-95 shadow-lg"
           >
             RSVP
@@ -73,7 +79,7 @@ const Navbar: React.FC = () => {
         </div>
 
         {/* Mobile Toggle */}
-        <button 
+        <button
           className="md:hidden text-white p-2"
           onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
           aria-label="Toggle Menu"
@@ -102,15 +108,14 @@ const Navbar: React.FC = () => {
                   key={link.path}
                   to={link.path}
                   onClick={() => setMobileMenuOpen(false)}
-                  className={`font-serif text-2xl tracking-wide transition-colors ${
-                    location.pathname === link.path ? 'text-amber-400' : 'text-white'
-                  }`}
+                  className={`font-serif text-2xl tracking-wide transition-colors ${location.pathname === link.path ? 'text-amber-400' : 'text-white'
+                    }`}
                 >
                   {link.name}
                 </Link>
               ))}
-              <Link 
-                to="/memorial" 
+              <Link
+                to="/memorial"
                 onClick={() => setMobileMenuOpen(false)}
                 className="bg-amber-500 text-emerald-950 px-6 py-4 rounded-xl text-center font-black uppercase tracking-[0.2em] shadow-lg"
               >
