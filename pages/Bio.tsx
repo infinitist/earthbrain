@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { db } from '../src/firebase';
-import { collection, addDoc, query, where, orderBy, getDocs } from 'firebase/firestore';
+import { collection, addDoc, query, orderBy, getDocs } from 'firebase/firestore';
 
 const Bio: React.FC = () => {
     const [form, setForm] = useState({ name: '', memory: '' });
@@ -14,11 +14,12 @@ const Bio: React.FC = () => {
             try {
                 const q = query(
                     collection(db, 'earthbrain_memories'),
-                    where('approved', '==', true),
                     orderBy('timestamp', 'desc')
                 );
                 const snapshot = await getDocs(q);
-                setApprovedMemories(snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() })));
+                const allMemories = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
+                // Filter client-side to avoid composite index requirement
+                setApprovedMemories(allMemories.filter((mem: any) => mem.approved === true));
             } catch (err) {
                 console.error('Error fetching approved memories:', err);
             }

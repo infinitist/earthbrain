@@ -383,9 +383,7 @@ const Admin: React.FC = () => {
           </div>
         </div>
 
-        <div className="mt-12 p-8 bg-white/50 rounded-[2.5rem] border border-emerald-50 print:hidden">
-          <h4 className="font-serif text-2xl mb-4 text-emerald-900">Legacy Sync Instructions</h4>
-        </div>
+
       </div>
     </div>
   );
