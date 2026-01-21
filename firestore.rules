@@ -9,9 +9,10 @@ service cloud.firestore {
       allow read: if request.auth != null;
     }
     
-    // Memories: Public can write and read, only Admin can delete
+    // Memories: Public can write and read approved ones, only Admin can read/delete all
     match /earthbrain_memories/{memory} {
-      allow read, write: if true;
+      allow write: if true;
+      allow read: if resource.data.approved == true || request.auth != null;
       allow delete: if request.auth != null;
     }
     

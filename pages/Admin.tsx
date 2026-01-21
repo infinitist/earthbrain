@@ -4,7 +4,7 @@ import { motion } from 'framer-motion';
 import { RSVPRecord } from '../types';
 import { auth, db } from '../src/firebase';
 import { onAuthStateChanged, signInWithEmailAndPassword, signOut, User } from 'firebase/auth';
-import { collection, getDocs, orderBy, query, addDoc, deleteDoc, doc } from 'firebase/firestore';
+import { collection, getDocs, orderBy, query, addDoc, deleteDoc, doc, updateDoc } from 'firebase/firestore';
 
 const Admin: React.FC = () => {
   const [records, setRecords] = useState<RSVPRecord[]>([]);
@@ -88,9 +88,38 @@ const Admin: React.FC = () => {
 
   const handleDeleteCharity = async (id: string) => {
     if (!window.confirm('Delete this charity?')) return;
-    // Note: Deleting requires the deleteDoc import which we need to add
-    alert('Deletion requires re-login or refresh to reflect (Simulated for safety)');
-    // actually implementing delete requires importing { deleteDoc, doc } from firebase/firestore
+    try {
+      await deleteDoc(doc(db, 'earthbrain_charities', id));
+      window.location.reload();
+    } catch (err) {
+      console.error(err);
+      alert('Error deleting charity');
+    }
+  };
+
+  const handleApproveMemory = async (id: string) => {
+    try {
+      const memoryRef = doc(db, 'earthbrain_memories', id);
+      await updateDoc(memoryRef, {
+        approved: true,
+        approvedAt: new Date().toISOString()
+      });
+      window.location.reload();
+    } catch (err) {
+      console.error(err);
+      alert('Error approving memory');
+    }
+  };
+
+  const handleRejectMemory = async (id: string) => {
+    if (!window.confirm('Permanently delete this memory?')) return;
+    try {
+      await deleteDoc(doc(db, 'earthbrain_memories', id));
+      window.location.reload();
+    } catch (err) {
+      console.error(err);
+      alert('Error deleting memory');
+    }
   };
 
   const clearData = () => {
@@ -249,18 +278,39 @@ const Admin: React.FC = () => {
 
         <div className="mt-12 p-8 bg-emerald-900 rounded-[2.5rem] text-white print:hidden">
           <div className="flex justify-between items-center mb-6">
-            <h4 className="font-serif text-3xl text-amber-500">Archived Memories</h4>
+            <h4 className="font-serif text-3xl text-amber-500">Community Memories</h4>
             <span className="text-xs bg-emerald-800 px-3 py-1 rounded-full">{memories.length} Stories Collected</span>
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6 max-h-[500px] overflow-y-auto">
             {memories.map((mem: any) => (
-              <div key={mem.id} className="bg-emerald-950/50 p-6 rounded-2xl border border-emerald-800">
+              <div key={mem.id} className="bg-emerald-950/50 p-6 rounded-2xl border border-emerald-800 relative">
+                <div className="flex justify-between items-start mb-3">
+                  <span className={`px-2 py-1 rounded-full text-[9px] font-bold uppercase ${mem.approved ? 'bg-green-500 text-white' : 'bg-amber-400 text-emerald-950'}`}>
+                    {mem.approved ? '✓ Published' : '⏳ Pending'}
+                  </span>
+                </div>
                 <p className="font-serif italic text-lg text-emerald-50 mb-4">"{mem.memory}"</p>
-                <div className="flex justify-between items-center text-xs text-emerald-400 font-bold uppercase tracking-widest">
+                <div className="flex justify-between items-center text-xs text-emerald-400 font-bold uppercase tracking-widest mb-3">
                   <span>— {mem.name || 'Anonymous'}</span>
                   <span>{new Date(mem.timestamp).toLocaleDateString()}</span>
                 </div>
+                {!mem.approved && (
+                  <div className="flex gap-2 mt-4 pt-4 border-t border-emerald-800">
+                    <button
+                      onClick={() => handleApproveMemory(mem.id)}
+                      className="flex-1 bg-green-600 hover:bg-green-500 text-white py-2 px-4 rounded-lg text-xs font-bold uppercase"
+                    >
+                      ✓ Approve
+                    </button>
+                    <button
+                      onClick={() => handleRejectMemory(mem.id)}
+                      className="flex-1 bg-red-600/80 hover:bg-red-500 text-white py-2 px-4 rounded-lg text-xs font-bold uppercase"
+                    >
+                      ✕ Reject
+                    </button>
+                  </div>
+                )}
               </div>
             ))}
             {memories.length === 0 && (

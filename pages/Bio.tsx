@@ -1,12 +1,30 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { db } from '../src/firebase';
-import { collection, addDoc } from 'firebase/firestore';
+import { collection, addDoc, query, where, orderBy, getDocs } from 'firebase/firestore';
 
 const Bio: React.FC = () => {
     const [form, setForm] = useState({ name: '', memory: '' });
     const [loading, setLoading] = useState(false);
     const [done, setDone] = useState(false);
+    const [approvedMemories, setApprovedMemories] = useState<any[]>([]);
+
+    useEffect(() => {
+        const fetchApprovedMemories = async () => {
+            try {
+                const q = query(
+                    collection(db, 'earthbrain_memories'),
+                    where('approved', '==', true),
+                    orderBy('timestamp', 'desc')
+                );
+                const snapshot = await getDocs(q);
+                setApprovedMemories(snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() })));
+            } catch (err) {
+                console.error('Error fetching approved memories:', err);
+            }
+        };
+        fetchApprovedMemories();
+    }, []);
 
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
@@ -16,7 +34,8 @@ const Bio: React.FC = () => {
             await addDoc(collection(db, 'earthbrain_memories'), {
                 name: form.name || 'Anonymous',
                 memory: form.memory,
-                timestamp: new Date().toISOString()
+                timestamp: new Date().toISOString(),
+                approved: false
             });
 
             setDone(true);
@@ -101,7 +120,7 @@ const Bio: React.FC = () => {
                         {done ? (
                             <div className="bg-emerald-50/50 p-10 rounded-3xl text-center border border-emerald-100">
                                 <p className="font-serif text-3xl text-emerald-900 mb-4 italic">Thank you</p>
-                                <p className="text-slate-600 mb-8">Your contribution has been added to the community library.</p>
+                                <p className="text-slate-600 mb-8">Your memory has been submitted for review and will appear once approved.</p>
                                 <button onClick={() => setDone(false)} className="text-xs font-bold uppercase tracking-widest text-amber-600 hover:text-amber-500 border-b-2 border-amber-200 pb-1 hover:border-amber-500 transition-all">
                                     Submit Another
                                 </button>
@@ -141,6 +160,36 @@ const Bio: React.FC = () => {
                         )}
                     </div>
                 </motion.div>
+
+                {/* Approved Memories Display */}
+                {approvedMemories.length > 0 && (
+                    <motion.div
+                        initial={{ opacity: 0 }}
+                        whileInView={{ opacity: 1 }}
+                        className="max-w-4xl mx-auto mt-20"
+                    >
+                        <div className="text-center mb-12">
+                            <h3 className="font-serif text-4xl text-emerald-950 mb-4">Shared Memories</h3>
+                            <p className="text-slate-500 max-w-lg mx-auto">Stories and reflections from our community</p>
+                        </div>
+                        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                            {approvedMemories.map((mem) => (
+                                <motion.div
+                                    key={mem.id}
+                                    initial={{ opacity: 0, y: 20 }}
+                                    whileInView={{ opacity: 1, y: 0 }}
+                                    className="card-fancy p-8 hover:shadow-xl transition-shadow"
+                                >
+                                    <p className="font-serif text-lg italic text-emerald-950 mb-4 leading-relaxed">"{mem.memory}"</p>
+                                    <div className="flex justify-between items-center text-xs text-slate-400 uppercase tracking-widest">
+                                        <span>— {mem.name || 'Anonymous'}</span>
+                                        <span>{new Date(mem.timestamp).toLocaleDateString()}</span>
+                                    </div>
+                                </motion.div>
+                            ))}
+                        </div>
+                    </motion.div>
+                )}
             </div>
         </div>
     );
