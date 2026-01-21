@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { motion } from 'framer-motion';
-import { RSVP_BACKEND_URL } from '../constants';
+import { db } from '../src/firebase';
+import { collection, addDoc } from 'firebase/firestore';
 
 const Bio: React.FC = () => {
     const [form, setForm] = useState({ name: '', memory: '' });
@@ -11,34 +12,18 @@ const Bio: React.FC = () => {
         e.preventDefault();
         setLoading(true);
 
-        const record = {
-            ...form,
-            type: 'bio_memory',
-            id: Date.now().toString(),
-            timestamp: new Date().toISOString()
-        };
-
         try {
-            // 1. Save Locally
-            const existing = JSON.parse(localStorage.getItem('earth_brain_bio_memories') || '[]');
-            localStorage.setItem('earth_brain_bio_memories', JSON.stringify([record, ...existing]));
-
-            // 2. Sync to Cloud
-            if (RSVP_BACKEND_URL) {
-                await fetch(RSVP_BACKEND_URL, {
-                    method: 'POST',
-                    mode: 'no-cors',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify(record)
-                });
-            }
+            await addDoc(collection(db, 'earthbrain_memories'), {
+                name: form.name || 'Anonymous',
+                memory: form.memory,
+                timestamp: new Date().toISOString()
+            });
 
             setDone(true);
             setForm({ name: '', memory: '' });
         } catch (err) {
             console.error(err);
-            alert("Connection issue. Your memory was saved locally and will sync later.");
-            setDone(true); // Still show success since it's in localStorage
+            alert("Error saving memory. Please try again.");
         } finally {
             setLoading(false);
         }
