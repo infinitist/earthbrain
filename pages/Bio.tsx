@@ -81,32 +81,11 @@ const Bio: React.FC = () => {
                     </div>
                 </div>
 
-                {/* Vertical Timeline */}
-                <div className="relative max-w-3xl mx-auto mb-32 pl-8 border-l-2 border-emerald-100 space-y-20">
-                    {timelineEvents.map((event, index) => (
-                        <motion.div
-                            key={index}
-                            initial={{ opacity: 0, x: -20 }}
-                            whileInView={{ opacity: 1, x: 0 }}
-                            viewport={{ once: true, margin: "-100px" }}
-                            transition={{ delay: index * 0.2 }}
-                            className="relative pl-8 group"
-                        >
-                            {/* Dot on line */}
-                            <div className="absolute -left-[41px] top-0 w-5 h-5 bg-amber-100 border-4 border-white rounded-full shadow-md group-hover:scale-125 group-hover:bg-amber-400 transition-all"></div>
-
-                            <span className="text-xs font-bold uppercase tracking-widest text-amber-600 mb-2 block">{event.year}</span>
-                            <h3 className="font-serif text-3xl text-emerald-950 mb-3 group-hover:text-amber-700 transition-colors">{event.title}</h3>
-                            <p className="text-slate-500 leading-relaxed font-light text-lg">{event.desc}</p>
-                        </motion.div>
-                    ))}
-                </div>
-
-                {/* Contribution Card */}
+                {/* Contribution Card - Moved to top for better UX */}
                 <motion.div
                     initial={{ opacity: 0, scale: 0.95 }}
                     whileInView={{ opacity: 1, scale: 1 }}
-                    className="max-w-4xl mx-auto"
+                    className="max-w-4xl mx-auto mb-32"
                 >
                     <div className="card-fancy p-10 md:p-16 relative">
                         {/* Decorative header */}
@@ -161,6 +140,28 @@ const Bio: React.FC = () => {
                         )}
                     </div>
                 </motion.div>
+
+                {/* Vertical Timeline */}
+                <div className="relative max-w-3xl mx-auto mb-32 pl-8 border-l-2 border-emerald-100 space-y-20">
+                    {timelineEvents.map((event, index) => (
+                        <motion.div
+                            key={index}
+                            initial={{ opacity: 0, x: -20 }}
+                            whileInView={{ opacity: 1, x: 0 }}
+                            viewport={{ once: true, margin: "-100px" }}
+                            transition={{ delay: index * 0.2 }}
+                            className="relative pl-8 group"
+                        >
+                            {/* Dot on line */}
+                            <div className="absolute -left-[41px] top-0 w-5 h-5 bg-amber-100 border-4 border-white rounded-full shadow-md group-hover:scale-125 group-hover:bg-amber-400 transition-all"></div>
+
+                            <span className="text-xs font-bold uppercase tracking-widest text-amber-600 mb-2 block">{event.year}</span>
+                            <h3 className="font-serif text-3xl text-emerald-950 mb-3 group-hover:text-amber-700 transition-colors">{event.title}</h3>
+                            <p className="text-slate-500 leading-relaxed font-light text-lg">{event.desc}</p>
+                        </motion.div>
+                    ))}
+                </div>
+
 
                 {/* Approved Memories Display */}
                 {approvedMemories.length > 0 && (

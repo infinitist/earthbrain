@@ -295,22 +295,31 @@ const Admin: React.FC = () => {
                   <span>— {mem.name || 'Anonymous'}</span>
                   <span>{new Date(mem.timestamp).toLocaleDateString()}</span>
                 </div>
-                {!mem.approved && (
-                  <div className="flex gap-2 mt-4 pt-4 border-t border-emerald-800">
-                    <button
-                      onClick={() => handleApproveMemory(mem.id)}
-                      className="flex-1 bg-green-600 hover:bg-green-500 text-white py-2 px-4 rounded-lg text-xs font-bold uppercase"
-                    >
-                      ✓ Approve
-                    </button>
+                <div className="flex gap-2 mt-4 pt-4 border-t border-emerald-800">
+                  {!mem.approved ? (
+                    <>
+                      <button
+                        onClick={() => handleApproveMemory(mem.id)}
+                        className="flex-1 bg-green-600 hover:bg-green-500 text-white py-2 px-4 rounded-lg text-xs font-bold uppercase"
+                      >
+                        ✓ Approve
+                      </button>
+                      <button
+                        onClick={() => handleRejectMemory(mem.id)}
+                        className="flex-1 bg-red-600/80 hover:bg-red-500 text-white py-2 px-4 rounded-lg text-xs font-bold uppercase"
+                      >
+                        ✕ Reject
+                      </button>
+                    </>
+                  ) : (
                     <button
                       onClick={() => handleRejectMemory(mem.id)}
-                      className="flex-1 bg-red-600/80 hover:bg-red-500 text-white py-2 px-4 rounded-lg text-xs font-bold uppercase"
+                      className="w-full bg-red-600/80 hover:bg-red-500 text-white py-2 px-4 rounded-lg text-xs font-bold uppercase"
                     >
-                      ✕ Reject
+                      🗑 Delete
                     </button>
-                  </div>
-                )}
+                  )}
+                </div>
               </div>
             ))}
             {memories.length === 0 && (
