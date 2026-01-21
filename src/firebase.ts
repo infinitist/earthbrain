@@ -5,15 +5,14 @@ import { getFirestore } from "firebase/firestore";
 import { getStorage } from "firebase/storage";
 import { getAnalytics } from "firebase/analytics";
 
-// Config provided by user
+// Config for ourearthbrain-final-free project
 const firebaseConfig = {
-  apiKey: "AIzaSyARwH82JRDlZK5Uy_QH1v0UzZXs3fJPWns",
-  authDomain: "ourearthbrain-final.firebaseapp.com",
-  projectId: "ourearthbrain-final",
-  storageBucket: "ourearthbrain-final.firebasestorage.app",
-  messagingSenderId: "253770635233",
-  appId: "1:253770635233:web:06a4cf87410a85d59b24a0",
-  measurementId: "G-90W3FPHHN1"
+  apiKey: "AIzaSyBISvb6V9OR1EsGef5quqCx8FItNu2h9i0",
+  authDomain: "ourearthbrain-final-free.firebaseapp.com",
+  projectId: "ourearthbrain-final-free",
+  storageBucket: "ourearthbrain-final-free.firebasestorage.app",
+  messagingSenderId: "860215686097",
+  appId: "1:860215686097:web:3459e1a07de2b29b82a6f0"
 };
 
 // Initialize Firebase
