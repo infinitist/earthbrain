@@ -30,17 +30,56 @@ const Members: React.FC = () => {
         setUploading(true);
 
         try {
-            // 1. Upload Image
-            const storageRef = ref(storage, `posts/${currentUser.uid}/${Date.now()}_${file.name}`);
-            await uploadBytes(storageRef, file);
-            const url = await getDownloadURL(storageRef);
+            // 1. Prepare Image (Resize and Compress)
+            const reader = new FileReader();
+            const imagePromise = new Promise<string>((resolve, reject) => {
+                reader.onload = async (event) => {
+                    const img = new Image();
+                    img.onload = () => {
+                        const canvas = document.createElement('canvas');
+                        let width = img.width;
+                        let height = img.height;
 
-            // 2. Save Post
+                        // Maximum dimensions to keep document size under 1MB
+                        const MAX_WIDTH = 800;
+                        const MAX_HEIGHT = 800;
+
+                        if (width > height) {
+                            if (width > MAX_WIDTH) {
+                                height *= MAX_WIDTH / width;
+                                width = MAX_WIDTH;
+                            }
+                        } else {
+                            if (height > MAX_HEIGHT) {
+                                width *= MAX_HEIGHT / height;
+                                height = MAX_HEIGHT;
+                            }
+                        }
+
+                        canvas.width = width;
+                        canvas.height = height;
+                        const ctx = canvas.getContext('2d');
+                        ctx?.drawImage(img, 0, 0, width, height);
+
+                        // Compress heavily to ensure it fits in Firestore (limit is 1MB total doc)
+                        const dataUrl = canvas.toDataURL('image/jpeg', 0.6);
+                        resolve(dataUrl);
+                    };
+                    img.onerror = reject;
+                    img.src = event.target?.result as string;
+                };
+                reader.onerror = reject;
+                reader.readAsDataURL(file);
+            });
+
+            const compressedBase64 = await imagePromise;
+
+            // 2. Save Post directly to Firestore
             await addDoc(collection(db, 'earthbrain_posts'), {
                 userId: currentUser.uid,
-                userName: currentUser.displayName,
+                userName: currentUser.displayName || 'Community Member',
                 userPhoto: currentUser.photoURL,
-                imageUrl: url,
+                imageUrl: compressedBase64, // Storing Base64 string directly
                 caption: caption,
                 timestamp: new Date().toISOString()
             });
@@ -49,7 +88,7 @@ const Members: React.FC = () => {
             setCaption('');
         } catch (err) {
             console.error(err);
-            alert("Error uploading post.");
+            alert("Error sharing post. Please try a smaller image.");
         } finally {
             setUploading(false);
         }
