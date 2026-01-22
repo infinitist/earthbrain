@@ -549,13 +549,16 @@ const Admin: React.FC = () => {
                     <>
                       <div className="mb-2">
                         <p className="font-bold text-sm">{char.name}</p>
+                        {char.label && (
+                          <p className="text-[10px] font-bold uppercase tracking-widest text-emerald-400 mt-1">{char.label}</p>
+                        )}
                         <a href={char.url} target="_blank" rel="noopener noreferrer" className="text-[10px] text-emerald-400 hover:text-emerald-300 underline">{char.url}</a>
                       </div>
                       {char.description && (
                         <p className="text-xs text-emerald-100/70 italic mb-3 leading-relaxed">"{char.description}"</p>
                       )}
                       <div className="flex gap-2 pt-2 border-t border-emerald-800/30">
-                        <button onClick={() => setEditingCharity({ id: char.id, name: char.name, url: char.url, description: char.description || '' })} className="text-xs text-emerald-400 hover:text-emerald-300 font-bold uppercase tracking-wider">Edit</button>
+                        <button onClick={() => setEditingCharity({ id: char.id, name: char.name, url: char.url, label: char.label || '', description: char.description || '' })} className="text-xs text-emerald-400 hover:text-emerald-300 font-bold uppercase tracking-wider">Edit</button>
                         <button onClick={() => handleDeleteCharity(char.id)} className="text-xs text-red-400 hover:text-red-300 font-bold uppercase tracking-wider">Delete</button>
                       </div>
                     </>
