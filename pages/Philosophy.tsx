@@ -6,16 +6,21 @@ import { RECOMMENDED_BOOKS } from '../constants';
 const Philosophy: React.FC = () => {
   const [activeTab, setActiveTab] = useState('identity');
   const tabsRef = useRef<HTMLDivElement>(null);
+  const isMounted = useRef(false);
 
   useEffect(() => {
+    // Skip scroll on initial mount (handled by Layout)
+    if (!isMounted.current) {
+      isMounted.current = true;
+      return;
+    }
+
     if (tabsRef.current) {
       // Calculate position to scroll to: 
       // Element top minus the navbar height (approx 74px)
       const elementPosition = tabsRef.current.getBoundingClientRect().top + window.pageYOffset;
       const offsetPosition = elementPosition - 74;
 
-      // Only scroll if we are already scrolled past the hero or if it's a tab change
-      // The user specifically wants to "go to the top of the menu"
       window.scrollTo({
         top: offsetPosition,
         behavior: 'smooth'

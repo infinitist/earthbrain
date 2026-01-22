@@ -25,11 +25,10 @@ const Navbar: React.FC = () => {
     { name: 'Archive', path: '/archive' },
   ];
 
-  const isHome = location.pathname === '/';
+  // Immersive pages have banners and need transparent navbars at the top
+  const isImmersive = ['/', '/memorial', '/philosophy', '/bio', '/members', '/archive', '/support'].includes(location.pathname);
 
-  // Navbar should be transparent only on Home page when not scrolled.
-  // On all other pages (Memorial, Archive, etc), it MUST be Emerald to ensure visibility.
-  const navbarBackgroundClass = (!isHome || isScrolled)
+  const navbarBackgroundClass = (isScrolled || !isImmersive)
     ? 'bg-emerald-950 shadow-xl py-3 border-b border-emerald-900'
     : 'bg-transparent py-5 border-b border-transparent';
 

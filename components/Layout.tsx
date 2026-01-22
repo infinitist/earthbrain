@@ -20,14 +20,14 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
     });
   }, [pathname]);
 
-  const isHome = pathname === '/';
+  const isImmersive = ['/', '/memorial', '/philosophy', '/bio', '/members', '/archive', '/support'].includes(pathname);
 
   return (
     <div className="min-h-screen flex flex-col bg-slate-50 bg-texture-leaf selection:bg-amber-200 selection:text-emerald-900">
       <Navbar />
 
-      {/* Spacer for fixed navbar on subpages */}
-      {!isHome && <div className="h-[74px]" aria-hidden="true" />}
+      {/* Spacer for fixed navbar on non-immersive subpages (like Admin) */}
+      {!isImmersive && <div className="h-[74px]" aria-hidden="true" />}
 
       <main className="flex-grow">
         {children}
