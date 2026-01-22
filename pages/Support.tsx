@@ -147,6 +147,13 @@ const Support: React.FC = () => {
                                     value={suggestion.url}
                                     onChange={e => setSuggestion({ ...suggestion, url: e.target.value })}
                                 />
+                                <input
+                                    type="text"
+                                    placeholder="Relationship (e.g., 'A Cause She Valued', 'Family Favorite')"
+                                    className="w-full p-4 bg-emerald-950/50 border border-emerald-800 rounded-xl focus:ring-2 focus:ring-amber-500 outline-none placeholder:text-emerald-700"
+                                    value={suggestion.label}
+                                    onChange={e => setSuggestion({ ...suggestion, label: e.target.value })}
+                                />
                                 <textarea
                                     placeholder="Why do you think she would have liked this?"
                                     className="w-full p-4 bg-emerald-950/50 border border-emerald-800 rounded-xl focus:ring-2 focus:ring-amber-500 outline-none placeholder:text-emerald-700 min-h-[100px]"
