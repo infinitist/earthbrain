@@ -511,9 +511,12 @@ const Admin: React.FC = () => {
                       ✓ Add to List
                     </button>
                     <button onClick={async () => {
-                      if (window.confirm('Delete suggestion?')) {
+                      try {
                         await deleteDoc(doc(db, 'earthbrain_charity_suggestions', sugg.id));
                         setSuggestions(prev => prev.filter(s => s.id !== sugg.id));
+                      } catch (err) {
+                        console.error(err);
+                        alert('Error deleting suggestion');
                       }
                     }} className="px-4 bg-slate-100 hover:bg-red-50 text-slate-400 hover:text-red-500 rounded-lg text-[10px] font-bold uppercase tracking-widest transition-all">Delete</button>
                   </div>
