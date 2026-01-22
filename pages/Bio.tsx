@@ -57,8 +57,21 @@ const Bio: React.FC = () => {
     ];
 
     return (
-        <div className="bg-slate-50 min-h-screen pt-64 pb-20 px-6 bg-texture-leaf">
-            <div className="container mx-auto max-w-5xl">
+        <div className="relative min-h-screen bg-slate-50 bg-texture-leaf">
+            {/* Banner */}
+            <div className="absolute top-0 left-0 w-full h-[60vh] overflow-hidden">
+                <motion.img
+                    initial={{ scale: 1.1, opacity: 0 }}
+                    animate={{ scale: 1, opacity: 1 }}
+                    transition={{ duration: 1.5 }}
+                    src="https://images.unsplash.com/photo-1448375240586-dfd8d395ea6c?auto=format&fit=crop&q=80&w=2000" // Green/Forest
+                    className="w-full h-full object-cover opacity-80"
+                    alt="Bio Banner"
+                />
+                <div className="absolute inset-0 bg-gradient-to-b from-emerald-950/30 via-transparent to-slate-50" />
+            </div>
+
+            <div className="relative z-10 pt-64 pb-20 px-6 container mx-auto max-w-5xl">
 
                 {/* Hero Section */}
                 <div className="text-center mb-20">

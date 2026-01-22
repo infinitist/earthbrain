@@ -100,8 +100,14 @@ const Members: React.FC = () => {
 
     if (!currentUser) {
         return (
-            <div className="bg-slate-50 min-h-screen flex items-center justify-center pt-32 px-6">
-                <div className="bg-white p-12 rounded-[3rem] shadow-2xl max-w-md w-full text-center">
+            <div className="relative min-h-screen bg-slate-50 flex items-center justify-center pt-32 px-6">
+                {/* Background */}
+                <div className="absolute inset-0 overflow-hidden">
+                    <img src="https://images.unsplash.com/photo-1518495973542-4542c06a5843?auto=format&fit=crop&q=80&w=2000" className="w-full h-full object-cover opacity-60" alt="Background" />
+                    <div className="absolute inset-0 bg-white/60 backdrop-blur-sm" />
+                </div>
+
+                <div className="relative z-10 bg-white p-12 rounded-[3rem] shadow-2xl max-w-md w-full text-center">
                     <div className="w-20 h-20 bg-emerald-100 rounded-full flex items-center justify-center mx-auto mb-8 text-emerald-600">
                         <svg className="w-10 h-10" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002-2zm10-10V7a4 4 0 00-8 0v4h8z" /></svg>
                     </div>
