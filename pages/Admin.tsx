@@ -160,6 +160,28 @@ const Admin: React.FC = () => {
     }
   };
 
+  const handleApproveSuggestion = async (sugg: any) => {
+    if (!window.confirm(`Approve charity: ${sugg.name}?`)) return;
+    try {
+      // 1. Add to Charities
+      const newCharity = {
+        name: sugg.name,
+        url: sugg.url,
+        description: sugg.reason || 'Community suggestion'
+      };
+      const docRef = await addDoc(collection(db, 'earthbrain_charities'), newCharity);
+      setCharities(prev => [...prev, { id: docRef.id, ...newCharity }]);
+
+      // 2. Delete from Suggestions
+      await deleteDoc(doc(db, 'earthbrain_charity_suggestions', sugg.id));
+      setSuggestions(prev => prev.filter(s => s.id !== sugg.id));
+
+    } catch (err) {
+      console.error(err);
+      alert('Error approving charity suggestion');
+    }
+  };
+
   const clearData = () => {
     if (window.confirm('Are you sure you want to clear all test data?')) {
       localStorage.removeItem('earth_brain_admin_data');
