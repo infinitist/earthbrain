@@ -12,8 +12,8 @@ const Admin: React.FC = () => {
   const [charities, setCharities] = useState<any[]>([]);
   const [suggestions, setSuggestions] = useState<any[]>([]);
   const [posts, setPosts] = useState<any[]>([]);
-  const [newCharity, setNewCharity] = useState({ name: '', url: '', description: '' });
-  const [editingCharity, setEditingCharity] = useState<{ id: string, name: string, url: string, description: string } | null>(null);
+  const [newCharity, setNewCharity] = useState({ name: '', url: '', label: '', description: '' });
+  const [editingCharity, setEditingCharity] = useState<{ id: string, name: string, url: string, label: string, description: string } | null>(null);
   const [user, setUser] = useState<User | null>(null);
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -82,7 +82,7 @@ const Admin: React.FC = () => {
     try {
       const docRef = await addDoc(collection(db, 'earthbrain_charities'), newCharity);
       setCharities(prev => [...prev, { id: docRef.id, ...newCharity }]);
-      setNewCharity({ name: '', url: '', description: '' });
+      setNewCharity({ name: '', url: '', label: '', description: '' });
     } catch (err) {
       console.error(err);
       alert('Error adding charity');
@@ -106,6 +106,7 @@ const Admin: React.FC = () => {
       await updateDoc(charityRef, {
         name: editingCharity.name,
         url: editingCharity.url,
+        label: editingCharity.label,
         description: editingCharity.description
       });
       setCharities(prev => prev.map(c => c.id === editingCharity.id ? { ...c, ...editingCharity } : c));
@@ -183,6 +184,7 @@ const Admin: React.FC = () => {
       const newCharity = {
         name: sugg.name,
         url: sugg.url,
+        label: 'Community Suggestion',
         description: sugg.reason || 'Community suggestion'
       };
       const docRef = await addDoc(collection(db, 'earthbrain_charities'), newCharity);
@@ -485,6 +487,12 @@ const Admin: React.FC = () => {
               />
               <input
                 className="w-full p-3 bg-emerald-950/50 border border-emerald-800 rounded-xl text-sm"
+                placeholder="Label (e.g., 'A Cause She Valued')"
+                value={newCharity.label}
+                onChange={e => setNewCharity({ ...newCharity, label: e.target.value })}
+              />
+              <input
+                className="w-full p-3 bg-emerald-950/50 border border-emerald-800 rounded-xl text-sm"
                 placeholder="URL"
                 value={newCharity.url}
                 onChange={e => setNewCharity({ ...newCharity, url: e.target.value })}
@@ -511,6 +519,12 @@ const Admin: React.FC = () => {
                         value={editingCharity.name}
                         onChange={e => setEditingCharity({ ...editingCharity, name: e.target.value })}
                         placeholder="Charity Name"
+                      />
+                      <input
+                        className="w-full p-2 bg-emerald-950/50 border border-emerald-800 rounded-lg text-sm text-white"
+                        value={editingCharity.label}
+                        onChange={e => setEditingCharity({ ...editingCharity, label: e.target.value })}
+                        placeholder="Label (e.g., 'A Cause She Valued')"
                       />
                       <input
                         className="w-full p-2 bg-emerald-950/50 border border-emerald-800 rounded-lg text-sm text-white"

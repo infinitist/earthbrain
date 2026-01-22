@@ -115,6 +115,9 @@ const Support: React.FC = () => {
                             {charities.map(charity => (
                                 <a key={charity.id} href={charity.url} target="_blank" rel="noreferrer" className="bg-white p-8 rounded-[2.5rem] border border-emerald-50 hover:shadow-xl transition-all group block">
                                     <h3 className="font-serif text-2xl text-emerald-950 mb-2 group-hover:text-amber-600 transition-colors">{charity.name}</h3>
+                                    {charity.label && (
+                                        <p className="text-xs font-bold uppercase tracking-widest text-emerald-700 mb-4">{charity.label}</p>
+                                    )}
                                     <p className="text-slate-500 text-sm">{charity.description}</p>
                                 </a>
                             ))}
