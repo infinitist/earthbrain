@@ -23,7 +23,7 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
   const isHome = pathname === '/';
 
   return (
-    <div className="min-h-screen flex flex-col bg-slate-50 selection:bg-amber-200 selection:text-emerald-900">
+    <div className="min-h-screen flex flex-col bg-slate-50 bg-texture-leaf selection:bg-amber-200 selection:text-emerald-900">
       <Navbar />
 
       {/* Spacer for fixed navbar on subpages */}
