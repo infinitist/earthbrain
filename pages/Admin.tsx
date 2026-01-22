@@ -13,6 +13,7 @@ const Admin: React.FC = () => {
   const [suggestions, setSuggestions] = useState<any[]>([]);
   const [posts, setPosts] = useState<any[]>([]);
   const [newCharity, setNewCharity] = useState({ name: '', url: '', description: '' });
+  const [editingCharity, setEditingCharity] = useState<{ id: string, name: string, url: string, description: string } | null>(null);
   const [user, setUser] = useState<User | null>(null);
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -484,12 +485,50 @@ const Admin: React.FC = () => {
 
             <div className="space-y-3 max-h-[300px] overflow-y-auto">
               {charities.map((char: any) => (
-                <div key={char.id} className="flex justify-between items-center bg-emerald-950/30 p-4 rounded-xl">
-                  <div>
-                    <p className="font-bold text-sm">{char.name}</p>
-                    <p className="text-[10px] text-emerald-400">{char.url}</p>
-                  </div>
-                  <button onClick={() => handleDeleteCharity(char.id)} className="text-xs text-red-400 hover:text-red-300">Delete</button>
+                <div key={char.id} className="bg-emerald-950/30 p-4 rounded-xl">
+                  {editingCharity?.id === char.id ? (
+                    // Edit Mode
+                    <div className="space-y-3">
+                      <input
+                        className="w-full p-2 bg-emerald-950/50 border border-emerald-800 rounded-lg text-sm text-white"
+                        value={editingCharity.name}
+                        onChange={e => setEditingCharity({ ...editingCharity, name: e.target.value })}
+                        placeholder="Charity Name"
+                      />
+                      <input
+                        className="w-full p-2 bg-emerald-950/50 border border-emerald-800 rounded-lg text-sm text-white"
+                        value={editingCharity.url}
+                        onChange={e => setEditingCharity({ ...editingCharity, url: e.target.value })}
+                        placeholder="URL"
+                      />
+                      <textarea
+                        className="w-full p-2 bg-emerald-950/50 border border-emerald-800 rounded-lg text-sm text-white resize-none"
+                        value={editingCharity.description}
+                        onChange={e => setEditingCharity({ ...editingCharity, description: e.target.value })}
+                        placeholder="Description"
+                        rows={2}
+                      />
+                      <div className="flex gap-2">
+                        <button onClick={handleUpdateCharity} className="flex-1 bg-emerald-600 hover:bg-emerald-500 text-white py-2 rounded-lg text-xs font-bold uppercase">Save</button>
+                        <button onClick={() => setEditingCharity(null)} className="flex-1 bg-slate-700 hover:bg-slate-600 text-white py-2 rounded-lg text-xs font-bold uppercase">Cancel</button>
+                      </div>
+                    </div>
+                  ) : (
+                    // View Mode
+                    <>
+                      <div className="mb-2">
+                        <p className="font-bold text-sm">{char.name}</p>
+                        <a href={char.url} target="_blank" rel="noopener noreferrer" className="text-[10px] text-emerald-400 hover:text-emerald-300 underline">{char.url}</a>
+                      </div>
+                      {char.description && (
+                        <p className="text-xs text-emerald-100/70 italic mb-3 leading-relaxed">"{char.description}"</p>
+                      )}
+                      <div className="flex gap-2 pt-2 border-t border-emerald-800/30">
+                        <button onClick={() => setEditingCharity({ id: char.id, name: char.name, url: char.url, description: char.description || '' })} className="text-xs text-emerald-400 hover:text-emerald-300 font-bold uppercase tracking-wider">Edit</button>
+                        <button onClick={() => handleDeleteCharity(char.id)} className="text-xs text-red-400 hover:text-red-300 font-bold uppercase tracking-wider">Delete</button>
+                      </div>
+                    </>
+                  )}
                 </div>
               ))}
             </div>
