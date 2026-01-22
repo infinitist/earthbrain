@@ -103,8 +103,8 @@ const Members: React.FC = () => {
             <div className="relative min-h-screen bg-slate-50 flex items-center justify-center pt-32 px-6">
                 {/* Background */}
                 <div className="absolute inset-0 overflow-hidden">
-                    <img src="https://images.unsplash.com/photo-1518495973542-4542c06a5843?auto=format&fit=crop&q=80&w=2000" className="w-full h-full object-cover opacity-60" alt="Background" />
-                    <div className="absolute inset-0 bg-white/60 backdrop-blur-sm" />
+                    <img src="https://images.unsplash.com/photo-1473448912268-2022ce9509d8?auto=format&fit=crop&q=80&w=2000" className="w-full h-full object-cover opacity-60" alt="Background" />
+                    <div className="absolute inset-0 bg-emerald-950/60 backdrop-blur-sm" />
                 </div>
 
                 <div className="relative z-10 bg-white p-12 rounded-[3rem] shadow-2xl max-w-md w-full text-center">
@@ -133,11 +133,11 @@ const Members: React.FC = () => {
                     initial={{ scale: 1.1, opacity: 0 }}
                     animate={{ scale: 1, opacity: 1 }}
                     transition={{ duration: 1.5 }}
-                    src="https://images.unsplash.com/photo-1518495973542-4542c06a5843?auto=format&fit=crop&q=80&w=2000"
+                    src="https://images.unsplash.com/photo-1473448912268-2022ce9509d8?auto=format&fit=crop&q=80&w=2000"
                     className="w-full h-full object-cover opacity-80"
                     alt="Community Banner"
                 />
-                <div className="absolute inset-0 bg-gradient-to-b from-emerald-950/20 via-transparent to-slate-50" />
+                <div className="absolute inset-0 bg-gradient-to-b from-emerald-950/90 via-emerald-950/40 to-slate-50" />
             </div>
 
             <div className="relative z-10 pt-48 pb-20 px-6">
