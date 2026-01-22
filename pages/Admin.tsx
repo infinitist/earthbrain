@@ -89,7 +89,6 @@ const Admin: React.FC = () => {
   };
 
   const handleDeleteCharity = async (id: string) => {
-    if (!window.confirm('Delete this charity?')) return;
     try {
       await deleteDoc(doc(db, 'earthbrain_charities', id));
       setCharities(prev => prev.filter(c => c.id !== id));
@@ -161,7 +160,6 @@ const Admin: React.FC = () => {
   };
 
   const handleApproveSuggestion = async (sugg: any) => {
-    if (!window.confirm(`Approve charity: ${sugg.name}?`)) return;
     try {
       // 1. Add to Charities
       const newCharity = {
