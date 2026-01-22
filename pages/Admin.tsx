@@ -484,14 +484,16 @@ const Admin: React.FC = () => {
                   <p className="font-bold text-emerald-950 mb-1">{sugg.name}</p>
                   <a href={sugg.url} target="_blank" className="text-xs text-amber-600 hover:underline mb-2 block">{sugg.url}</a>
                   <p className="text-slate-600 text-sm italic">"{sugg.reason}"</p>
-                  <div className="flex justify-between items-center mt-2">
-                    <p className="text-[10px] text-slate-400">{new Date(sugg.timestamp).toLocaleDateString()}</p>
+                  <div className="flex gap-2 mt-4 pt-4 border-t border-slate-100">
+                    <button onClick={() => handleApproveSuggestion(sugg)} className="flex-1 bg-emerald-600 hover:bg-emerald-500 text-white rounded-lg py-2 text-[10px] font-bold uppercase tracking-widest transition-all">
+                      ✓ Add to List
+                    </button>
                     <button onClick={async () => {
                       if (window.confirm('Delete suggestion?')) {
                         await deleteDoc(doc(db, 'earthbrain_charity_suggestions', sugg.id));
                         setSuggestions(prev => prev.filter(s => s.id !== sugg.id));
                       }
-                    }} className="text-xs text-red-400 hover:text-red-500 font-bold uppercase tracking-widest">Delete</button>
+                    }} className="px-4 bg-slate-100 hover:bg-red-50 text-slate-400 hover:text-red-500 rounded-lg text-[10px] font-bold uppercase tracking-widest transition-all">Delete</button>
                   </div>
                 </div>
               ))}
