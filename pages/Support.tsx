@@ -105,13 +105,6 @@ const Support: React.FC = () => {
                         </div>
 
                         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                            {/* Hardcoded Favorites (fallback if DB empty) */}
-                            <a href="https://www.basichumanneeds.org/donate" target="_blank" rel="noreferrer" className="bg-white p-8 rounded-[2.5rem] border border-emerald-50 hover:shadow-xl transition-all group block">
-                                <h3 className="font-serif text-2xl text-emerald-950 mb-2 group-hover:text-amber-600 transition-colors">Basic Human Needs</h3>
-                                <p className="text-xs font-bold uppercase tracking-widest text-emerald-700 mb-4">A Cause She Valued</p>
-                                <p className="text-slate-500 text-sm">Supporting the fundamental rights of every human being to survive and thrive.</p>
-                            </a>
-
                             {charities.map(charity => (
                                 <a key={charity.id} href={charity.url} target="_blank" rel="noreferrer" className="bg-white p-8 rounded-[2.5rem] border border-emerald-50 hover:shadow-xl transition-all group block">
                                     <h3 className="font-serif text-2xl text-emerald-950 mb-2 group-hover:text-amber-600 transition-colors">{charity.name}</h3>
