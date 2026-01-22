@@ -141,10 +141,17 @@ const Members: React.FC = () => {
             </div>
 
             <div className="relative z-10 pt-48 pb-20 px-6">
-                <div className="container mx-auto max-w-2xl">
-                    <div className="flex justify-between items-center mb-10">
-                        <h1 className="font-serif text-4xl text-emerald-950 tracking-tight">Community Wall</h1>
-                        <button onClick={logout} className="text-xs font-bold uppercase tracking-widest text-slate-400 hover:text-red-500">Sign Out</button>
+                <div className="container mx-auto max-w-2xl relative">
+                    {/* Logout Button (Absolute Top Right of Container) */}
+                    <div className="absolute top-0 right-0 -mt-10 md:-mt-0">
+                        <button onClick={logout} className="text-[10px] font-bold uppercase tracking-widest text-white/90 hover:text-amber-400 bg-emerald-950/30 hover:bg-emerald-950/50 px-4 py-2 rounded-full backdrop-blur-md transition-all border border-white/10">Sign Out</button>
+                    </div>
+
+                    <div className="text-center mb-16 pt-8">
+                        <h1 className="font-serif text-5xl md:text-6xl text-white drop-shadow-md tracking-tight mb-6 italic">Community Wall</h1>
+                        <p className="text-emerald-100/90 text-lg font-light drop-shadow-sm max-w-lg mx-auto leading-relaxed">
+                            Share your photos and memories with the family.
+                        </p>
                     </div>
 
                     {/* Upload Form */}

@@ -64,7 +64,7 @@ const Bio: React.FC = () => {
                     initial={{ scale: 1.1, opacity: 0 }}
                     animate={{ scale: 1, opacity: 1 }}
                     transition={{ duration: 1.5 }}
-                    src="https://images.unsplash.com/photo-1448375240586-dfd8d395ea6c?auto=format&fit=crop&q=80&w=2000" // Green/Forest
+                    src="https://images.unsplash.com/photo-1441974231531-c6227db76b6e?auto=format&fit=crop&q=80&w=2560" // Ancient Canopy (Known Good)
                     className="w-full h-full object-cover opacity-80"
                     alt="Bio Banner"
                 />
