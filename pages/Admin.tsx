@@ -99,6 +99,23 @@ const Admin: React.FC = () => {
     }
   };
 
+  const handleUpdateCharity = async () => {
+    if (!editingCharity) return;
+    try {
+      const charityRef = doc(db, 'earthbrain_charities', editingCharity.id);
+      await updateDoc(charityRef, {
+        name: editingCharity.name,
+        url: editingCharity.url,
+        description: editingCharity.description
+      });
+      setCharities(prev => prev.map(c => c.id === editingCharity.id ? { ...c, ...editingCharity } : c));
+      setEditingCharity(null);
+    } catch (err) {
+      console.error(err);
+      alert('Error updating charity');
+    }
+  };
+
   const handleApproveMemory = async (id: string) => {
     try {
       const memoryRef = doc(db, 'earthbrain_memories', id);
