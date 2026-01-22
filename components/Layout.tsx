@@ -11,13 +11,27 @@ interface LayoutProps {
 const Layout: React.FC<LayoutProps> = ({ children }) => {
   const { pathname } = useLocation();
 
-  // Scroll to top whenever the path changes
+  // Scroll to top and update title whenever the path changes
   useEffect(() => {
     window.scrollTo({
       top: 0,
       left: 0,
       behavior: 'instant'
     });
+
+    const titles: Record<string, string> = {
+      '/': 'Home',
+      '/memorial': 'Memorial',
+      '/philosophy': 'Philosophy',
+      '/bio': 'Biography',
+      '/members': 'Members Area',
+      '/support': 'Support',
+      '/archive': 'Details',
+      '/admin': 'Admin'
+    };
+
+    const pageTitle = titles[pathname] || 'Our Earth Brain';
+    document.title = `${pageTitle} | Our Earth Brain`;
   }, [pathname]);
 
   const isImmersive = ['/', '/memorial', '/philosophy', '/bio', '/members', '/archive', '/support'].includes(pathname);
