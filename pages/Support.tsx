@@ -12,7 +12,7 @@ interface Charity {
 
 const Support: React.FC = () => {
     const [charities, setCharities] = useState<Charity[]>([]);
-    const [suggestion, setSuggestion] = useState({ name: '', url: '', reason: '' });
+    const [suggestion, setSuggestion] = useState({ name: '', url: '', label: '', reason: '' });
     const [suggesting, setSuggesting] = useState(false);
     const [done, setDone] = useState(false);
 
@@ -37,12 +37,13 @@ const Support: React.FC = () => {
             await addDoc(collection(db, 'earthbrain_charity_suggestions'), {
                 name: suggestion.name,
                 url: suggestion.url,
+                label: suggestion.label,
                 reason: suggestion.reason,
                 timestamp: new Date().toISOString()
             });
 
             setDone(true);
-            setSuggestion({ name: '', url: '', reason: '' });
+            setSuggestion({ name: '', url: '', label: '', reason: '' });
         } catch (err) {
             console.error(err);
             alert("Error sending suggestion. Please try again.");
