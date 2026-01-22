@@ -120,74 +120,89 @@ const Members: React.FC = () => {
     }
 
     return (
-        <div className="bg-slate-50 min-h-screen pt-64 pb-20 px-6">
-            <div className="container mx-auto max-w-2xl">
-                <div className="flex justify-between items-center mb-10">
-                    <h1 className="font-serif text-4xl text-emerald-950 tracking-tight">Community Wall</h1>
-                    <button onClick={logout} className="text-xs font-bold uppercase tracking-widest text-slate-400 hover:text-red-500">Sign Out</button>
-                </div>
+        <div className="relative min-h-screen bg-slate-50">
+            {/* Nature Banner */}
+            <div className="absolute top-0 left-0 w-full h-[60vh] overflow-hidden">
+                <motion.img
+                    initial={{ scale: 1.1, opacity: 0 }}
+                    animate={{ scale: 1, opacity: 1 }}
+                    transition={{ duration: 1.5 }}
+                    src="https://images.unsplash.com/photo-1518495973542-4542c06a5843?auto=format&fit=crop&q=80&w=2000"
+                    className="w-full h-full object-cover opacity-80"
+                    alt="Community Banner"
+                />
+                <div className="absolute inset-0 bg-gradient-to-b from-emerald-950/20 via-transparent to-slate-50" />
+            </div>
 
-                {/* Upload Form */}
-                <div className="bg-white p-6 rounded-[2rem] shadow-lg mb-12 border border-emerald-50">
-                    <form onSubmit={handleUpload} className="space-y-4">
-                        <textarea
-                            value={caption}
-                            onChange={e => setCaption(e.target.value)}
-                            placeholder="Share a moment or thought..."
-                            className="w-full p-4 bg-slate-50 rounded-xl border-none focus:ring-2 focus:ring-emerald-500 resize-none"
-                            rows={2}
-                        />
-                        <div className="flex justify-between items-center">
-                            <input
-                                type="file"
-                                accept="image/*"
-                                onChange={e => setFile(e.target.files?.[0] || null)}
-                                className="text-xs text-slate-400 file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-xs file:font-semibold file:bg-emerald-50 file:text-emerald-700 hover:file:bg-emerald-100"
+            <div className="relative z-10 pt-48 pb-20 px-6">
+                <div className="container mx-auto max-w-2xl">
+                    <div className="flex justify-between items-center mb-10">
+                        <h1 className="font-serif text-4xl text-emerald-950 tracking-tight">Community Wall</h1>
+                        <button onClick={logout} className="text-xs font-bold uppercase tracking-widest text-slate-400 hover:text-red-500">Sign Out</button>
+                    </div>
+
+                    {/* Upload Form */}
+                    <div className="bg-white p-6 rounded-[2rem] shadow-lg mb-12 border border-emerald-50">
+                        <form onSubmit={handleUpload} className="space-y-4">
+                            <textarea
+                                value={caption}
+                                onChange={e => setCaption(e.target.value)}
+                                placeholder="Share a moment or thought..."
+                                className="w-full p-4 bg-slate-50 rounded-xl border-none focus:ring-2 focus:ring-emerald-500 resize-none"
+                                rows={2}
                             />
-                            <button
-                                disabled={!file || uploading}
-                                className="bg-amber-500 text-emerald-950 px-6 py-2 rounded-full font-bold uppercase tracking-widest text-xs disabled:opacity-50"
-                            >
-                                {uploading ? 'Posting...' : 'Post'}
-                            </button>
-                        </div>
-                    </form>
-                </div>
+                            <div className="flex justify-between items-center">
+                                <input
+                                    type="file"
+                                    accept="image/*"
+                                    onChange={e => setFile(e.target.files?.[0] || null)}
+                                    className="text-xs text-slate-400 file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-xs file:font-semibold file:bg-emerald-50 file:text-emerald-700 hover:file:bg-emerald-100"
+                                />
+                                <button
+                                    disabled={!file || uploading}
+                                    className="bg-amber-500 text-emerald-950 px-6 py-2 rounded-full font-bold uppercase tracking-widest text-xs disabled:opacity-50"
+                                >
+                                    {uploading ? 'Posting...' : 'Post'}
+                                </button>
+                            </div>
+                        </form>
+                    </div>
 
-                {/* Feed */}
-                <div className="space-y-8">
-                    {posts.map(post => (
-                        <motion.div
-                            key={post.id}
-                            initial={{ opacity: 0, y: 20 }}
-                            animate={{ opacity: 1, y: 0 }}
-                            className="bg-white rounded-[2.5rem] overflow-hidden shadow-lg border border-slate-100"
-                        >
-                            <div className="p-6 flex items-center gap-3">
-                                {post.userPhoto && <img src={post.userPhoto} className="w-10 h-10 rounded-full" alt={post.userName} />}
-                                <div>
-                                    <p className="font-bold text-emerald-950 text-sm">{post.userName}</p>
-                                    <p className="text-[10px] text-slate-400 uppercase tracking-widest">{new Date(post.timestamp).toLocaleDateString()}</p>
+                    {/* Feed */}
+                    <div className="space-y-8">
+                        {posts.map(post => (
+                            <motion.div
+                                key={post.id}
+                                initial={{ opacity: 0, y: 20 }}
+                                animate={{ opacity: 1, y: 0 }}
+                                className="bg-white rounded-[2.5rem] overflow-hidden shadow-lg border border-slate-100"
+                            >
+                                <div className="p-6 flex items-center gap-3">
+                                    {post.userPhoto && <img src={post.userPhoto} className="w-10 h-10 rounded-full" alt={post.userName} />}
+                                    <div>
+                                        <p className="font-bold text-emerald-950 text-sm">{post.userName}</p>
+                                        <p className="text-[10px] text-slate-400 uppercase tracking-widest">{new Date(post.timestamp).toLocaleDateString()}</p>
+                                    </div>
+                                    {!post.approved && (
+                                        <span className="ml-auto bg-amber-100 text-amber-700 text-[10px] font-bold uppercase tracking-widest px-3 py-1 rounded-full">
+                                            Pending Review
+                                        </span>
+                                    )}
                                 </div>
-                                {!post.approved && (
-                                    <span className="ml-auto bg-amber-100 text-amber-700 text-[10px] font-bold uppercase tracking-widest px-3 py-1 rounded-full">
-                                        Pending Review
-                                    </span>
+                                {post.imageUrl && (
+                                    <img src={post.imageUrl} className="w-full h-auto max-h-[500px] object-cover" alt="Post" />
                                 )}
+                                <div className="p-6">
+                                    <p className="text-slate-600 font-serif italic">{post.caption}</p>
+                                </div>
+                            </motion.div>
+                        ))}
+                        {posts.length === 0 && (
+                            <div className="text-center py-20 text-slate-400">
+                                <p>No posts yet. Be the first to share.</p>
                             </div>
-                            {post.imageUrl && (
-                                <img src={post.imageUrl} className="w-full h-auto max-h-[500px] object-cover" alt="Post" />
-                            )}
-                            <div className="p-6">
-                                <p className="text-slate-600 font-serif italic">{post.caption}</p>
-                            </div>
-                        </motion.div>
-                    ))}
-                    {posts.length === 0 && (
-                        <div className="text-center py-20 text-slate-400">
-                            <p>No posts yet. Be the first to share.</p>
-                        </div>
-                    )}
+                        )}
+                    </div>
                 </div>
             </div>
         </div>

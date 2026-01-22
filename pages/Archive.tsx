@@ -81,8 +81,18 @@ const Archive: React.FC = () => {
   return (
     <div className="min-h-screen bg-white">
       {/* Immersive Library Header */}
-      <header className="pt-64 pb-20 px-6 bg-slate-50 border-b border-emerald-100 text-center">
-        <div className="container mx-auto max-w-6xl">
+      <header className="relative pt-64 pb-20 px-6 border-b border-emerald-100 text-center overflow-hidden">
+        {/* Nature Banner */}
+        <div className="absolute inset-0 z-0">
+          <img
+            src="https://images.unsplash.com/photo-1542273917363-3b1817f69a2d?auto=format&fit=crop&q=80&w=2000"
+            className="w-full h-full object-cover brightness-50 grayscale hover:grayscale-0 transition-all duration-[3s]"
+            alt="Archive Banner"
+          />
+          <div className="absolute inset-0 bg-gradient-to-t from-slate-50 via-white/80 to-transparent" />
+        </div>
+
+        <div className="relative z-10 container mx-auto max-w-6xl">
           <div className="opacity-100">
             <span className="text-amber-500 font-black uppercase tracking-[0.5em] text-[10px] block mb-6">Video Library</span>
             <h1 className="font-serif text-6xl md:text-9xl text-emerald-950 mb-8 tracking-tighter leading-none italic">The Archive</h1>
