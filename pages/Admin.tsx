@@ -184,7 +184,7 @@ const Admin: React.FC = () => {
       const newCharity = {
         name: sugg.name,
         url: sugg.url,
-        label: 'Community Suggestion',
+        label: sugg.label || 'Community Suggestion',
         description: sugg.reason || 'Community suggestion'
       };
       const docRef = await addDoc(collection(db, 'earthbrain_charities'), newCharity);
@@ -575,6 +575,9 @@ const Admin: React.FC = () => {
               {suggestions.map((sugg: any) => (
                 <div key={sugg.id} className="bg-slate-50 p-6 rounded-2xl">
                   <p className="font-bold text-emerald-950 mb-1">{sugg.name}</p>
+                  {sugg.label && (
+                    <p className="text-[10px] font-bold uppercase tracking-widest text-emerald-700 mb-2">{sugg.label}</p>
+                  )}
                   <a href={sugg.url} target="_blank" className="text-xs text-amber-600 hover:underline mb-2 block">{sugg.url}</a>
                   <p className="text-slate-600 text-sm italic">"{sugg.reason}"</p>
                   <div className="flex gap-2 mt-4 pt-4 border-t border-slate-100">
